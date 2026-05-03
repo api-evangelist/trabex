@@ -1,0 +1,806 @@
+openapi: 3.1.0
+info:
+  title: Trabex Trade Compliance API
+  description: >-
+    The Trabex Trade Compliance API provides programmatic access to export
+    compliance automation including shipment data submission, export
+    documentation generation, Automated Export System (AES) filing, and
+    restricted party screening (RPS). The API enables organizations to
+    integrate compliance workflows directly into logistics and ERP systems,
+    supporting single shipments, batch processing, and continuous screening
+    operations. Trabex automates document creation, AES filing, and restricted
+    party screening to reduce export compliance risk and errors.
+  version: '1.0'
+  contact:
+    name: Trabex Support
+    url: https://support.trabex.io/support/home
+  termsOfService: https://trabex.io
+externalDocs:
+  description: Trabex API Documentation
+  url: https://apidocs.trabex.io/
+servers:
+  - url: https://api.trabex.io
+    description: Production Server
+tags:
+  - name: Shipments
+    description: >-
+      Submit and manage export shipment data for compliance processing,
+      AES filing, and documentation generation.
+  - name: Screening
+    description: >-
+      Perform restricted party screening (RPS) against denied party lists,
+      sanctioned entities, and embargoed countries to identify compliance risks.
+  - name: Documents
+    description: >-
+      Generate and retrieve export compliance documents including commercial
+      invoices, packing lists, certificates of origin, and shipper's letter
+      of instruction.
+  - name: AES Filing
+    description: >-
+      Submit and manage Electronic Export Information (EEI) filings to the
+      Automated Export System (AES) for export reporting compliance.
+  - name: Companies
+    description: >-
+      Manage company and party information used in trade compliance workflows
+      including shippers, consignees, and freight forwarders.
+security:
+  - apiKeyAuth: []
+paths:
+  /v1/shipments:
+    get:
+      operationId: getShipments
+      summary: Get Shipments
+      description: >-
+        Retrieves a list of shipments submitted to the Trabex platform for
+        compliance processing. Supports filtering by status, date range, and
+        other criteria.
+      tags:
+        - Shipments
+      parameters:
+        - name: status
+          in: query
+          description: Filter by shipment compliance status.
+          required: false
+          schema:
+            type: string
+            enum:
+              - Pending
+              - Processing
+              - Approved
+              - Flagged
+              - Filed
+        - name: page
+          in: query
+          description: Page number for paginated results.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+        - name: pageSize
+          in: query
+          description: Number of records per page.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+        - name: fromDate
+          in: query
+          description: Filter shipments created on or after this date (ISO 8601).
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: toDate
+          in: query
+          description: Filter shipments created on or before this date (ISO 8601).
+          required: false
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Successfully retrieved shipments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShipmentsListResponse'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      operationId: createShipment
+      summary: Create Shipment
+      description: >-
+        Submits a new export shipment for compliance processing. Triggers
+        automated restricted party screening, AES filing eligibility
+        assessment, and export documentation generation.
+      tags:
+        - Shipments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShipmentRequest'
+      responses:
+        '201':
+          description: Shipment successfully created and queued for processing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+        '400':
+          description: Invalid shipment data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v1/shipments/{shipmentId}:
+    get:
+      operationId: getShipment
+      summary: Get Shipment
+      description: >-
+        Retrieves details of a specific shipment including compliance status,
+        screening results, AES filing status, and generated documents.
+      tags:
+        - Shipments
+      parameters:
+        - $ref: '#/components/parameters/ShipmentId'
+      responses:
+        '200':
+          description: Successfully retrieved shipment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Shipment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      operationId: updateShipment
+      summary: Update Shipment
+      description: >-
+        Updates an existing shipment with corrected information before or
+        during compliance processing. Triggers re-screening and re-evaluation
+        of the updated shipment data.
+      tags:
+        - Shipments
+      parameters:
+        - $ref: '#/components/parameters/ShipmentId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShipmentRequest'
+      responses:
+        '200':
+          description: Shipment successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+        '400':
+          description: Invalid shipment data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Shipment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v1/screening/check:
+    post:
+      operationId: screenParty
+      summary: Screen Party
+      description: >-
+        Performs a real-time restricted party screening check against denied
+        party lists, specially designated nationals (SDN), debarred lists,
+        and embargoed country databases. Returns match results with risk
+        scores and match details.
+      tags:
+        - Screening
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScreeningRequest'
+      responses:
+        '200':
+          description: Screening check completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScreeningResponse'
+        '400':
+          description: Invalid screening request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v1/screening/batch:
+    post:
+      operationId: screenPartiesBatch
+      summary: Batch Screen Parties
+      description: >-
+        Performs restricted party screening for multiple parties in a single
+        request. Ideal for bulk screening of customer lists, vendor databases,
+        or order queues requiring simultaneous compliance checks.
+      tags:
+        - Screening
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - parties
+              properties:
+                parties:
+                  type: array
+                  description: List of parties to screen.
+                  items:
+                    $ref: '#/components/schemas/Party'
+      responses:
+        '200':
+          description: Batch screening completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ScreeningResponse'
+        '400':
+          description: Invalid batch request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v1/documents/{shipmentId}:
+    get:
+      operationId: getShipmentDocuments
+      summary: Get Shipment Documents
+      description: >-
+        Retrieves a list of generated export compliance documents for a
+        specific shipment including commercial invoices, packing lists,
+        certificates of origin, and shipper's letter of instruction.
+      tags:
+        - Documents
+      parameters:
+        - $ref: '#/components/parameters/ShipmentId'
+      responses:
+        '200':
+          description: Successfully retrieved shipment documents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentsResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Shipment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v1/aes/filings:
+    get:
+      operationId: getAESFilings
+      summary: Get AES Filings
+      description: >-
+        Retrieves a list of Electronic Export Information (EEI) filings
+        submitted to the Automated Export System (AES). Returns filing
+        status and internal transaction numbers (ITN).
+      tags:
+        - AES Filing
+      parameters:
+        - name: status
+          in: query
+          description: Filter filings by AES submission status.
+          required: false
+          schema:
+            type: string
+            enum:
+              - Pending
+              - Accepted
+              - Fatal
+              - Rejected
+        - name: page
+          in: query
+          description: Page number for paginated results.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: Successfully retrieved AES filings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AESFilingsResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v1/aes/filings/{shipmentId}:
+    post:
+      operationId: submitAESFiling
+      summary: Submit AES Filing
+      description: >-
+        Submits Electronic Export Information (EEI) to the Automated Export
+        System (AES) for the specified shipment. Returns the AES confirmation
+        and Internal Transaction Number (ITN) on success.
+      tags:
+        - AES Filing
+      parameters:
+        - $ref: '#/components/parameters/ShipmentId'
+      responses:
+        '200':
+          description: AES filing successfully submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AESFilingResponse'
+        '400':
+          description: Missing required export data for AES filing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Shipment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v1/companies:
+    get:
+      operationId: getCompanies
+      summary: Get Companies
+      description: >-
+        Retrieves a list of companies and trading partners stored in the
+        Trabex platform for use in shipment and compliance workflows.
+      tags:
+        - Companies
+      responses:
+        '200':
+          description: Successfully retrieved companies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompaniesResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      operationId: createCompany
+      summary: Create Company
+      description: >-
+        Creates a new company record for use as a shipper, consignee, or
+        freight forwarder in trade compliance workflows.
+      tags:
+        - Companies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Company'
+      responses:
+        '201':
+          description: Company successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '400':
+          description: Invalid company data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: >-
+        Trabex API key for authenticating requests. Obtain your API key
+        from the Trabex customer portal at support.trabex.io.
+  parameters:
+    ShipmentId:
+      name: shipmentId
+      in: path
+      required: true
+      description: The unique identifier of the shipment.
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      description: Standard error response from the Trabex API.
+      properties:
+        code:
+          type: string
+          description: Error code identifier.
+        message:
+          type: string
+          description: Human-readable error description.
+        details:
+          type: array
+          description: Additional error detail messages.
+          items:
+            type: string
+    Party:
+      type: object
+      description: A trading party for restricted party screening.
+      properties:
+        name:
+          type: string
+          description: Full legal name of the party.
+        address:
+          type: string
+          description: Street address.
+        city:
+          type: string
+          description: City.
+        state:
+          type: string
+          description: State or province.
+        country:
+          type: string
+          description: ISO 3166-1 alpha-2 country code.
+        postalCode:
+          type: string
+          description: Postal or zip code.
+    ScreeningRequest:
+      type: object
+      description: Request body for a restricted party screening check.
+      required:
+        - party
+      properties:
+        party:
+          $ref: '#/components/schemas/Party'
+        listTypes:
+          type: array
+          description: >-
+            Specific screening lists to check. If omitted, all applicable
+            lists are checked.
+          items:
+            type: string
+            enum:
+              - SDN
+              - DPL
+              - EL
+              - BIS
+              - OFAC
+    ScreeningResponse:
+      type: object
+      description: Results of a restricted party screening check.
+      properties:
+        party:
+          $ref: '#/components/schemas/Party'
+        riskLevel:
+          type: string
+          description: Overall compliance risk level.
+          enum:
+            - Clear
+            - Review
+            - Blocked
+        matches:
+          type: array
+          description: List of potential matches found in screening lists.
+          items:
+            type: object
+            properties:
+              listName:
+                type: string
+                description: Name of the list where match was found.
+              matchedName:
+                type: string
+                description: Name of the matched entity on the list.
+              matchScore:
+                type: number
+                format: double
+                description: Confidence score of the match (0-100).
+              reason:
+                type: string
+                description: Reason for inclusion on the list.
+    ExportLineItem:
+      type: object
+      description: A line item in an export shipment.
+      properties:
+        description:
+          type: string
+          description: Description of the commodity.
+        scheduleBNumber:
+          type: string
+          description: Schedule B or HTS classification number.
+        quantity:
+          type: number
+          description: Export quantity.
+        unitOfMeasure:
+          type: string
+          description: Unit of measure code.
+        valueUSD:
+          type: number
+          format: double
+          description: Value in US dollars.
+        countryOfOrigin:
+          type: string
+          description: ISO 3166-1 alpha-2 country of origin code.
+        eccnNumber:
+          type: string
+          description: Export Control Classification Number if applicable.
+    ShipmentRequest:
+      type: object
+      description: Request body for creating or updating an export shipment.
+      required:
+        - shipper
+        - consignee
+        - destinationCountry
+        - lineItems
+      properties:
+        shipper:
+          $ref: '#/components/schemas/Party'
+        consignee:
+          $ref: '#/components/schemas/Party'
+        freightForwarder:
+          $ref: '#/components/schemas/Party'
+        destinationCountry:
+          type: string
+          description: ISO 3166-1 alpha-2 destination country code.
+        exportDate:
+          type: string
+          format: date
+          description: Planned or actual export date.
+        carrier:
+          type: string
+          description: Carrier name or SCAC code.
+        trackingNumber:
+          type: string
+          description: Shipment tracking or bill of lading number.
+        lineItems:
+          type: array
+          description: List of commodity line items in the shipment.
+          items:
+            $ref: '#/components/schemas/ExportLineItem'
+        referenceNumber:
+          type: string
+          description: Internal reference or order number.
+    Shipment:
+      type: object
+      description: An export shipment with compliance status and results.
+      properties:
+        shipmentId:
+          type: string
+          description: Unique Trabex identifier for the shipment.
+        status:
+          type: string
+          description: Current compliance processing status.
+          enum:
+            - Pending
+            - Processing
+            - Approved
+            - Flagged
+            - Filed
+        screeningStatus:
+          type: string
+          description: Restricted party screening result.
+          enum:
+            - Clear
+            - Review
+            - Blocked
+        aesStatus:
+          type: string
+          description: AES filing status.
+          enum:
+            - NotRequired
+            - Pending
+            - Accepted
+            - Fatal
+            - Rejected
+        itn:
+          type: string
+          description: >-
+            Internal Transaction Number (ITN) from AES upon successful filing.
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the shipment was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp of last update.
+        shipper:
+          $ref: '#/components/schemas/Party'
+        consignee:
+          $ref: '#/components/schemas/Party'
+        destinationCountry:
+          type: string
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExportLineItem'
+    ShipmentsListResponse:
+      type: object
+      description: Paginated list of export shipments.
+      properties:
+        total:
+          type: integer
+          description: Total number of matching shipments.
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        shipments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Shipment'
+    DocumentsResponse:
+      type: object
+      description: List of export compliance documents for a shipment.
+      properties:
+        shipmentId:
+          type: string
+        documents:
+          type: array
+          items:
+            type: object
+            properties:
+              documentType:
+                type: string
+                description: >-
+                  Type of document.
+                enum:
+                  - CommercialInvoice
+                  - PackingList
+                  - CertificateOfOrigin
+                  - ShippersLetterOfInstruction
+                  - AESConfirmation
+              downloadUrl:
+                type: string
+                format: uri
+                description: URL to download the document.
+              generatedAt:
+                type: string
+                format: date-time
+    AESFilingResponse:
+      type: object
+      description: Result of an AES filing submission.
+      properties:
+        shipmentId:
+          type: string
+        status:
+          type: string
+          enum:
+            - Accepted
+            - Fatal
+            - Rejected
+        itn:
+          type: string
+          description: Internal Transaction Number assigned by AES.
+        message:
+          type: string
+          description: AES response message.
+        filedAt:
+          type: string
+          format: date-time
+    AESFilingsResponse:
+      type: object
+      description: Paginated list of AES filings.
+      properties:
+        total:
+          type: integer
+        filings:
+          type: array
+          items:
+            $ref: '#/components/schemas/AESFilingResponse'
+    Company:
+      type: object
+      description: A company or trading party record in the Trabex platform.
+      required:
+        - name
+        - country
+      properties:
+        companyId:
+          type: string
+          description: Unique company identifier (assigned on creation).
+        name:
+          type: string
+          description: Full legal name of the company.
+        address:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+          description: ISO 3166-1 alpha-2 country code.
+        postalCode:
+          type: string
+        role:
+          type: string
+          description: Primary role in trade transactions.
+          enum:
+            - Shipper
+            - Consignee
+            - FreightForwarder
+            - BrokerAgent
+    CompaniesResponse:
+      type: object
+      description: List of companies in the Trabex platform.
+      properties:
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Company'

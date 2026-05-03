@@ -1,0 +1,40 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.trabex.io/v1/screening/check",
+    "headers": {
+      "X-API-Key": "{{TRABEX_API_KEY}}",
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    "body": {
+      "party": {
+        "name": "Eurotech Distribution GmbH",
+        "address": "Berliner Strasse 45",
+        "city": "Frankfurt",
+        "state": "Hesse",
+        "country": "DE",
+        "postalCode": "60311"
+      },
+      "listTypes": ["SDN", "DPL", "EL", "BIS", "OFAC"]
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "party": {
+        "name": "Eurotech Distribution GmbH",
+        "address": "Berliner Strasse 45",
+        "city": "Frankfurt",
+        "state": "Hesse",
+        "country": "DE",
+        "postalCode": "60311"
+      },
+      "riskLevel": "Clear",
+      "matches": []
+    }
+  }
+}

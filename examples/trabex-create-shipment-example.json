@@ -1,0 +1,88 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.trabex.io/v1/shipments",
+    "headers": {
+      "X-API-Key": "{{TRABEX_API_KEY}}",
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    "body": {
+      "shipper": {
+        "name": "Acme Manufacturing Inc.",
+        "address": "123 Industrial Blvd",
+        "city": "Houston",
+        "state": "TX",
+        "country": "US",
+        "postalCode": "77001"
+      },
+      "consignee": {
+        "name": "Eurotech Distribution GmbH",
+        "address": "Berliner Strasse 45",
+        "city": "Frankfurt",
+        "state": "Hesse",
+        "country": "DE",
+        "postalCode": "60311"
+      },
+      "destinationCountry": "DE",
+      "exportDate": "2026-05-10",
+      "carrier": "DHL Express",
+      "trackingNumber": "1234567890",
+      "lineItems": [
+        {
+          "description": "Industrial Control Boards",
+          "scheduleBNumber": "8537.10.9130",
+          "quantity": 50,
+          "unitOfMeasure": "NO",
+          "valueUSD": 25000.00,
+          "countryOfOrigin": "US",
+          "eccnNumber": "EAR99"
+        }
+      ],
+      "referenceNumber": "PO-2026-4521"
+    }
+  },
+  "response": {
+    "status": 201,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "shipmentId": "TRB-20260503-00892",
+      "status": "Processing",
+      "screeningStatus": "Clear",
+      "aesStatus": "Pending",
+      "itn": null,
+      "createdAt": "2026-05-03T14:23:11Z",
+      "updatedAt": "2026-05-03T14:23:11Z",
+      "shipper": {
+        "name": "Acme Manufacturing Inc.",
+        "address": "123 Industrial Blvd",
+        "city": "Houston",
+        "state": "TX",
+        "country": "US",
+        "postalCode": "77001"
+      },
+      "consignee": {
+        "name": "Eurotech Distribution GmbH",
+        "address": "Berliner Strasse 45",
+        "city": "Frankfurt",
+        "state": "Hesse",
+        "country": "DE",
+        "postalCode": "60311"
+      },
+      "destinationCountry": "DE",
+      "lineItems": [
+        {
+          "description": "Industrial Control Boards",
+          "scheduleBNumber": "8537.10.9130",
+          "quantity": 50,
+          "unitOfMeasure": "NO",
+          "valueUSD": 25000.00,
+          "countryOfOrigin": "US",
+          "eccnNumber": "EAR99"
+        }
+      ]
+    }
+  }
+}

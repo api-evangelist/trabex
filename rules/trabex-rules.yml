@@ -1,0 +1,110 @@
+extends: spectral:oas
+rules:
+  trabex-operation-summary-title-case:
+    description: Operation summaries must use Title Case.
+    severity: warn
+    given: "$.paths[*][*].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9]*(\\s[A-Z][a-zA-Z0-9]*)*$"
+
+  trabex-operation-ids-required:
+    description: All operations must have an operationId.
+    severity: error
+    given: "$.paths[*][*]"
+    then:
+      field: operationId
+      function: defined
+
+  trabex-operation-description-required:
+    description: All operations must have a description.
+    severity: warn
+    given: "$.paths[*][*]"
+    then:
+      field: description
+      function: defined
+
+  trabex-api-key-in-header:
+    description: API key authentication must use X-API-Key header.
+    severity: warn
+    given: "$.components.securitySchemes.apiKeyAuth"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          properties:
+            in:
+              const: header
+            name:
+              const: X-API-Key
+
+  trabex-tags-required:
+    description: All operations must be tagged for categorization.
+    severity: warn
+    given: "$.paths[*][*]"
+    then:
+      field: tags
+      function: defined
+
+  trabex-versioned-paths:
+    description: All API paths must be versioned with /v1/ prefix.
+    severity: error
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^/v[0-9]+"
+
+  trabex-shipment-id-path-param:
+    description: Paths with shipmentId must define it as a path parameter.
+    severity: error
+    given: "$.paths[*][*].parameters[?(@.name=='shipmentId')]"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          properties:
+            in:
+              const: path
+            required:
+              const: true
+
+  trabex-response-2xx-defined:
+    description: All operations must define a 200 or 201 success response.
+    severity: error
+    given: "$.paths[*][*].responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: ["200"]
+            - required: ["201"]
+
+  trabex-response-401-defined:
+    description: All operations should define a 401 unauthorized response.
+    severity: warn
+    given: "$.paths[*][*].responses"
+    then:
+      field: "401"
+      function: defined
+
+  trabex-post-request-body:
+    description: POST and PUT operations must define a requestBody.
+    severity: error
+    given: "$.paths[*][post,put]"
+    then:
+      field: requestBody
+      function: defined
+
+  trabex-screening-response-risk-level:
+    description: Screening responses must include riskLevel field.
+    severity: warn
+    given: "$.components.schemas.ScreeningResponse.properties"
+    then:
+      field: riskLevel
+      function: defined

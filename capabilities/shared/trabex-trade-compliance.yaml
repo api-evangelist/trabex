@@ -1,0 +1,259 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Trabex Trade Compliance API"
+  description: "Trade compliance automation platform providing export shipment management, restricted party screening, AES filing, document generation, and company management."
+  tags:
+    - AES Filing
+    - Compliance
+    - Export Control
+    - Logistics
+    - Restricted Party Screening
+    - Trade Compliance
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      TRABEX_API_KEY: TRABEX_API_KEY
+
+capability:
+  consumes:
+    - type: http
+      namespace: trabex-trade-compliance
+      baseUri: https://api.trabex.io
+      description: "Trabex trade compliance API for export shipment management and screening"
+      authentication:
+        type: apikey
+        key: X-API-Key
+        value: "{{TRABEX_API_KEY}}"
+        placement: header
+      resources:
+        - name: shipments
+          path: /v1/shipments
+          description: "Export shipment management"
+          operations:
+            - name: get-shipments
+              method: GET
+              description: "Retrieve a list of export shipments"
+              inputParameters:
+                - name: status
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter by compliance status"
+                - name: page
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Page number"
+                - name: pageSize
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Records per page"
+                - name: fromDate
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter from date (ISO 8601)"
+                - name: toDate
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter to date (ISO 8601)"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-shipment
+              method: POST
+              description: "Submit an export shipment for compliance processing"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  shipper: "{{tools.shipper}}"
+                  consignee: "{{tools.consignee}}"
+                  destinationCountry: "{{tools.destination_country}}"
+                  exportDate: "{{tools.export_date}}"
+                  lineItems: "{{tools.line_items}}"
+            - name: get-shipment
+              method: GET
+              description: "Retrieve a specific shipment"
+              inputParameters:
+                - name: shipmentId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Shipment identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: update-shipment
+              method: PUT
+              description: "Update an existing shipment"
+              inputParameters:
+                - name: shipmentId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Shipment identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  shipper: "{{tools.shipper}}"
+                  consignee: "{{tools.consignee}}"
+                  destinationCountry: "{{tools.destination_country}}"
+                  lineItems: "{{tools.line_items}}"
+        - name: screening
+          path: /v1/screening
+          description: "Restricted party screening"
+          operations:
+            - name: screen-party
+              method: POST
+              description: "Perform restricted party screening for a single party"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  party: "{{tools.party}}"
+                  listTypes: "{{tools.list_types}}"
+            - name: batch-screen-parties
+              method: POST
+              description: "Perform restricted party screening for multiple parties"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  parties: "{{tools.parties}}"
+        - name: documents
+          path: /v1/documents
+          description: "Export compliance document retrieval"
+          operations:
+            - name: get-shipment-documents
+              method: GET
+              description: "Retrieve export compliance documents for a shipment"
+              inputParameters:
+                - name: shipmentId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Shipment identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: aes-filings
+          path: /v1/aes/filings
+          description: "AES filing management"
+          operations:
+            - name: get-aes-filings
+              method: GET
+              description: "Retrieve AES filings"
+              inputParameters:
+                - name: status
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter by AES filing status"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: submit-aes-filing
+              method: POST
+              description: "Submit AES filing for a shipment"
+              inputParameters:
+                - name: shipmentId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Shipment identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: companies
+          path: /v1/companies
+          description: "Company and trading party management"
+          operations:
+            - name: get-companies
+              method: GET
+              description: "Retrieve company records"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-company
+              method: POST
+              description: "Create a company record"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+                  country: "{{tools.country}}"
+                  address: "{{tools.address}}"
+                  role: "{{tools.role}}"
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: trabex-compliance-api
+      resources:
+        - path: /v1/shipments
+          name: shipments
+          description: "Export shipments"
+          operations:
+            - method: GET
+              name: get-shipments
+              description: "Retrieve export shipments"
+              call: "trabex-trade-compliance.get-shipments"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: trabex-compliance-mcp
+      transport: http
+      tools:
+        - name: get-shipments
+          description: "Retrieve Trabex export shipments"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "trabex-trade-compliance.get-shipments"
+          outputParameters:
+            - type: object
+              mapping: "$."

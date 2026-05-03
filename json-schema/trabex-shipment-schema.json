@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.com/schemas/trabex/shipment.json",
+  "title": "Trabex Export Shipment",
+  "description": "Schema for a Trabex export shipment including shipper, consignee, commodity line items, and compliance processing status.",
+  "type": "object",
+  "required": ["shipper", "consignee", "destinationCountry", "lineItems"],
+  "properties": {
+    "shipmentId": {
+      "type": "string",
+      "description": "Unique Trabex identifier for the shipment (assigned on creation)."
+    },
+    "status": {
+      "type": "string",
+      "description": "Current compliance processing status.",
+      "enum": ["Pending", "Processing", "Approved", "Flagged", "Filed"]
+    },
+    "screeningStatus": {
+      "type": "string",
+      "description": "Restricted party screening result.",
+      "enum": ["Clear", "Review", "Blocked"]
+    },
+    "aesStatus": {
+      "type": "string",
+      "description": "AES filing status.",
+      "enum": ["NotRequired", "Pending", "Accepted", "Fatal", "Rejected"]
+    },
+    "itn": {
+      "type": ["string", "null"],
+      "description": "Internal Transaction Number from AES upon successful filing."
+    },
+    "shipper": {
+      "$ref": "#/$defs/Party",
+      "description": "The exporting party."
+    },
+    "consignee": {
+      "$ref": "#/$defs/Party",
+      "description": "The receiving party."
+    },
+    "freightForwarder": {
+      "$ref": "#/$defs/Party",
+      "description": "Optional freight forwarder."
+    },
+    "destinationCountry": {
+      "type": "string",
+      "description": "ISO 3166-1 alpha-2 destination country code.",
+      "pattern": "^[A-Z]{2}$"
+    },
+    "exportDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Planned or actual export date."
+    },
+    "carrier": {
+      "type": "string",
+      "description": "Carrier name or SCAC code."
+    },
+    "trackingNumber": {
+      "type": "string",
+      "description": "Shipment tracking or bill of lading number."
+    },
+    "referenceNumber": {
+      "type": "string",
+      "description": "Internal reference or order number."
+    },
+    "lineItems": {
+      "type": "array",
+      "description": "Commodity line items in the export shipment.",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/ExportLineItem"
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the shipment was created."
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of the last update."
+    }
+  },
+  "$defs": {
+    "Party": {
+      "type": "object",
+      "title": "Trading Party",
+      "description": "A party involved in a trade transaction.",
+      "required": ["name", "country"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Full legal name of the party."
+        },
+        "address": {
+          "type": "string",
+          "description": "Street address."
+        },
+        "city": {
+          "type": "string",
+          "description": "City."
+        },
+        "state": {
+          "type": "string",
+          "description": "State or province."
+        },
+        "country": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 country code.",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "postalCode": {
+          "type": "string",
+          "description": "Postal or zip code."
+        }
+      }
+    },
+    "ExportLineItem": {
+      "type": "object",
+      "title": "Export Line Item",
+      "description": "A single commodity line item in an export shipment.",
+      "required": ["description", "quantity", "valueUSD"],
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Description of the commodity."
+        },
+        "scheduleBNumber": {
+          "type": "string",
+          "description": "Schedule B or HTS tariff classification number.",
+          "pattern": "^[0-9]{4}\\.[0-9]{2}\\.[0-9]{4}$"
+        },
+        "quantity": {
+          "type": "number",
+          "description": "Export quantity.",
+          "minimum": 0
+        },
+        "unitOfMeasure": {
+          "type": "string",
+          "description": "Unit of measure code (Census Bureau codes).",
+          "examples": ["NO", "KG", "LB", "MT", "L"]
+        },
+        "valueUSD": {
+          "type": "number",
+          "format": "double",
+          "description": "Value of goods in US dollars.",
+          "minimum": 0
+        },
+        "countryOfOrigin": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 country of origin code.",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "eccnNumber": {
+          "type": "string",
+          "description": "Export Control Classification Number (ECCN) from EAR.",
+          "examples": ["EAR99", "5E002", "4A994"]
+        }
+      }
+    }
+  }
+}

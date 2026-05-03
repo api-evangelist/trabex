@@ -1,0 +1,52 @@
+{
+  "name": "Trabex Export Shipment",
+  "description": "Structure of a Trabex export shipment document for trade compliance processing",
+  "fields": [
+    { "name": "shipmentId", "type": "string", "description": "Trabex unique identifier" },
+    { "name": "status", "type": "string", "description": "Compliance processing status", "enum": ["Pending", "Processing", "Approved", "Flagged", "Filed"] },
+    { "name": "screeningStatus", "type": "string", "description": "Screening result", "enum": ["Clear", "Review", "Blocked"] },
+    { "name": "aesStatus", "type": "string", "description": "AES filing status", "enum": ["NotRequired", "Pending", "Accepted", "Fatal", "Rejected"] },
+    { "name": "itn", "type": "string", "nullable": true, "description": "Internal Transaction Number from AES" },
+    {
+      "name": "shipper", "type": "object", "description": "Exporting party",
+      "fields": [
+        { "name": "name", "type": "string" },
+        { "name": "address", "type": "string" },
+        { "name": "city", "type": "string" },
+        { "name": "state", "type": "string" },
+        { "name": "country", "type": "string" },
+        { "name": "postalCode", "type": "string" }
+      ]
+    },
+    {
+      "name": "consignee", "type": "object", "description": "Receiving party",
+      "fields": [
+        { "name": "name", "type": "string" },
+        { "name": "address", "type": "string" },
+        { "name": "city", "type": "string" },
+        { "name": "state", "type": "string" },
+        { "name": "country", "type": "string" },
+        { "name": "postalCode", "type": "string" }
+      ]
+    },
+    { "name": "destinationCountry", "type": "string", "description": "ISO 3166-1 alpha-2 destination country" },
+    { "name": "exportDate", "type": "date", "description": "Planned or actual export date" },
+    { "name": "carrier", "type": "string", "description": "Carrier name or SCAC code" },
+    { "name": "trackingNumber", "type": "string", "description": "Shipment tracking number" },
+    { "name": "referenceNumber", "type": "string", "description": "Internal reference number" },
+    {
+      "name": "lineItems", "type": "array", "description": "Commodity line items",
+      "items": {
+        "fields": [
+          { "name": "description", "type": "string" },
+          { "name": "scheduleBNumber", "type": "string" },
+          { "name": "quantity", "type": "number" },
+          { "name": "unitOfMeasure", "type": "string" },
+          { "name": "valueUSD", "type": "number" },
+          { "name": "countryOfOrigin", "type": "string" },
+          { "name": "eccnNumber", "type": "string" }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+name: Trabex Trade Compliance Vocabulary
+description: >-
+  Domain vocabulary for Trabex trade compliance automation covering export
+  control, restricted party screening, AES filing, and export documentation.
+  Includes regulatory terminology from EAR, ITAR, OFAC, and Census Bureau
+  export reporting requirements.
+tags:
+  - AES Filing
+  - Compliance
+  - Export Control
+  - International Trade
+  - Restricted Party Screening
+terms:
+  - term: Automated Export System
+    abbreviation: AES
+    description: >-
+      The US Census Bureau's system for collecting Electronic Export
+      Information (EEI) on export shipments. All US exports with a value
+      exceeding $2,500 or requiring an export license must be filed in AES.
+    synonyms:
+      - AES
+      - ACE AES
+  - term: Electronic Export Information
+    abbreviation: EEI
+    description: >-
+      The data elements required to be filed in AES for export transactions.
+      Includes shipper, consignee, commodity, Schedule B number, value,
+      quantity, country of ultimate destination, and license information.
+    synonyms:
+      - Shipper's Export Declaration
+      - SED
+  - term: Internal Transaction Number
+    abbreviation: ITN
+    description: >-
+      A unique 14-character confirmation number issued by AES upon successful
+      acceptance of an EEI filing. Required on the bill of lading or air
+      waybill for export shipments.
+    synonyms:
+      - AES ITN
+      - AES Confirmation Number
+  - term: Restricted Party Screening
+    abbreviation: RPS
+    description: >-
+      The process of checking trading partners (customers, suppliers,
+      freight forwarders) against government-maintained lists of denied
+      parties, sanctioned individuals, and entities prohibited from receiving
+      US exports.
+    synonyms:
+      - Denied Party Screening
+      - Sanctions Screening
+  - term: Specially Designated Nationals
+    abbreviation: SDN
+    description: >-
+      OFAC's list of individuals and companies owned or controlled by,
+      or acting for, targeted countries. US persons are generally prohibited
+      from dealing with SDN-listed parties.
+    synonyms:
+      - SDN List
+      - OFAC SDN
+  - term: Denied Persons List
+    abbreviation: DPL
+    description: >-
+      The BIS (Bureau of Industry and Security) list of individuals and
+      organizations that have been denied export privileges.
+  - term: Entity List
+    abbreviation: EL
+    description: >-
+      A BIS-maintained list of foreign parties subject to specific license
+      requirements for export, re-export, and transfer of items subject to
+      the Export Administration Regulations (EAR).
+  - term: Export Control Classification Number
+    abbreviation: ECCN
+    description: >-
+      An alphanumeric designation from the Commerce Control List (CCL)
+      used to identify items subject to export controls. Items not on the
+      CCL are classified as EAR99.
+    synonyms:
+      - ECCN
+  - term: Schedule B Number
+    description: >-
+      A 10-digit US Census Bureau commodity classification code used to
+      classify exported goods for AES filing and trade statistics.
+    synonyms:
+      - Schedule B
+      - HTS Export Code
+  - term: Harmonized Tariff Schedule
+    abbreviation: HTS
+    description: >-
+      A classification system for imported goods. For exports, the
+      equivalent Schedule B number is used in AES filings.
+  - term: Country of Origin
+    description: >-
+      The country where a product was manufactured, grown, or substantially
+      transformed. Required on export documentation and affects tariff
+      treatment and trade agreements.
+  - term: Country of Ultimate Destination
+    description: >-
+      The country where the exported goods will ultimately be consumed or
+      used, as declared on the AES filing. May differ from the country of
+      first destination.
+  - term: Export Administration Regulations
+    abbreviation: EAR
+    description: >-
+      US Department of Commerce regulations governing the export of
+      commercial items. Items subject to EAR require assessment of the ECCN
+      classification and applicable export license requirements.
+  - term: OFAC
+    description: >-
+      Office of Foreign Assets Control — the US Treasury Department's
+      agency that administers and enforces economic and trade sanctions.
+  - term: BIS
+    description: >-
+      Bureau of Industry and Security — the US Commerce Department agency
+      that administers the Export Administration Regulations and maintains
+      the Entity List and Denied Persons List.
+  - term: Shipper's Letter of Instruction
+    abbreviation: SLI
+    description: >-
+      A document completed by the exporter authorizing the freight forwarder
+      to act on their behalf and providing instructions for export shipment
+      processing and documentation.
+  - term: Certificate of Origin
+    abbreviation: CO
+    description: >-
+      A document certifying that exported goods were manufactured, produced,
+      or processed in a particular country. Often required by customs
+      authorities in the destination country.
+  - term: Commercial Invoice
+    description: >-
+      The official record of sale between exporter and importer, used
+      by customs authorities to determine the true value of goods
+      and assess duties and taxes.
+  - term: Packing List
+    description: >-
+      A document detailing the contents, weights, and dimensions of each
+      package in a shipment. Used by customs and logistics providers to
+      verify shipment contents.
+  - term: SCAC Code
+    description: >-
+      Standard Carrier Alpha Code — a 2-4 letter identifier assigned to
+      transportation companies by the National Motor Freight Traffic
+      Association (NMFTA).

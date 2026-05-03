@@ -1,0 +1,290 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Trabex Export Compliance"
+  description: "End-to-end export compliance workflow combining shipment management, restricted party screening, AES filing, and compliance document generation. Used by export compliance teams to automate EEI filing, screen trading partners, and generate required export documentation."
+  tags:
+    - AES Filing
+    - Compliance
+    - Export Control
+    - Logistics
+    - Restricted Party Screening
+    - Trade Compliance
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      TRABEX_API_KEY: TRABEX_API_KEY
+
+capability:
+  consumes:
+    - import: trabex-trade-compliance
+      location: ./shared/trabex-trade-compliance.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: export-compliance-api
+      description: "Unified REST API for Trabex export compliance workflows."
+      resources:
+        - path: /v1/shipments
+          name: shipments
+          description: "Export shipment management and compliance processing"
+          operations:
+            - method: GET
+              name: get-shipments
+              description: "Retrieve export shipments with compliance status"
+              call: "trabex-trade-compliance.get-shipments"
+              with:
+                status: "rest.status"
+                page: "rest.page"
+                fromDate: "rest.fromDate"
+                toDate: "rest.toDate"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-shipment
+              description: "Submit an export shipment for compliance processing"
+              call: "trabex-trade-compliance.create-shipment"
+              with:
+                shipper: "rest.shipper"
+                consignee: "rest.consignee"
+                destination_country: "rest.destinationCountry"
+                export_date: "rest.exportDate"
+                line_items: "rest.lineItems"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/shipments/{shipmentId}
+          name: shipment
+          description: "Individual shipment operations"
+          operations:
+            - method: GET
+              name: get-shipment
+              description: "Retrieve a specific shipment with compliance details"
+              call: "trabex-trade-compliance.get-shipment"
+              with:
+                shipmentId: "rest.shipmentId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/screening
+          name: screening
+          description: "Restricted party screening operations"
+          operations:
+            - method: POST
+              name: screen-party
+              description: "Screen a trading party against denied party lists"
+              call: "trabex-trade-compliance.screen-party"
+              with:
+                party: "rest.party"
+                list_types: "rest.listTypes"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/batch-screening
+          name: batch-screening
+          description: "Bulk restricted party screening"
+          operations:
+            - method: POST
+              name: batch-screen-parties
+              description: "Screen multiple parties simultaneously"
+              call: "trabex-trade-compliance.batch-screen-parties"
+              with:
+                parties: "rest.parties"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/documents/{shipmentId}
+          name: documents
+          description: "Export compliance documents"
+          operations:
+            - method: GET
+              name: get-shipment-documents
+              description: "Retrieve export documents for a shipment"
+              call: "trabex-trade-compliance.get-shipment-documents"
+              with:
+                shipmentId: "rest.shipmentId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/aes-filings
+          name: aes-filings
+          description: "AES filing management"
+          operations:
+            - method: GET
+              name: get-aes-filings
+              description: "Retrieve AES filing history"
+              call: "trabex-trade-compliance.get-aes-filings"
+              with:
+                status: "rest.status"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/aes-filings/{shipmentId}
+          name: aes-filing
+          description: "AES filing submission"
+          operations:
+            - method: POST
+              name: submit-aes-filing
+              description: "Submit AES filing for a shipment"
+              call: "trabex-trade-compliance.submit-aes-filing"
+              with:
+                shipmentId: "rest.shipmentId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/companies
+          name: companies
+          description: "Trading party management"
+          operations:
+            - method: GET
+              name: get-companies
+              description: "Retrieve company records"
+              call: "trabex-trade-compliance.get-companies"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-company
+              description: "Create a company record"
+              call: "trabex-trade-compliance.create-company"
+              with:
+                name: "rest.name"
+                country: "rest.country"
+                address: "rest.address"
+                role: "rest.role"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: export-compliance-mcp
+      transport: http
+      description: "MCP server for AI-assisted Trabex export compliance operations."
+      tools:
+        - name: get-shipments
+          description: "Retrieve export shipments with compliance status from Trabex"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "trabex-trade-compliance.get-shipments"
+          with:
+            status: "tools.status"
+            fromDate: "tools.from_date"
+            toDate: "tools.to_date"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-shipment
+          description: "Submit a new export shipment for Trabex compliance processing"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "trabex-trade-compliance.create-shipment"
+          with:
+            shipper: "tools.shipper"
+            consignee: "tools.consignee"
+            destination_country: "tools.destination_country"
+            export_date: "tools.export_date"
+            line_items: "tools.line_items"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-shipment
+          description: "Retrieve compliance details for a specific Trabex shipment"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "trabex-trade-compliance.get-shipment"
+          with:
+            shipmentId: "tools.shipment_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: screen-party
+          description: "Screen a trading party against denied party and sanctions lists"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "trabex-trade-compliance.screen-party"
+          with:
+            party: "tools.party"
+            list_types: "tools.list_types"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: batch-screen-parties
+          description: "Screen multiple trading parties simultaneously against compliance lists"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "trabex-trade-compliance.batch-screen-parties"
+          with:
+            parties: "tools.parties"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-shipment-documents
+          description: "Retrieve export compliance documents for a Trabex shipment"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "trabex-trade-compliance.get-shipment-documents"
+          with:
+            shipmentId: "tools.shipment_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: submit-aes-filing
+          description: "Submit Electronic Export Information to AES for a shipment"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "trabex-trade-compliance.submit-aes-filing"
+          with:
+            shipmentId: "tools.shipment_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-aes-filings
+          description: "Retrieve AES filing history and status"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "trabex-trade-compliance.get-aes-filings"
+          with:
+            status: "tools.status"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-companies
+          description: "Retrieve trading party company records from Trabex"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "trabex-trade-compliance.get-companies"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-company
+          description: "Create a company record in Trabex for use in compliance workflows"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "trabex-trade-compliance.create-company"
+          with:
+            name: "tools.name"
+            country: "tools.country"
+            address: "tools.address"
+            role: "tools.role"
+          outputParameters:
+            - type: object
+              mapping: "$."
