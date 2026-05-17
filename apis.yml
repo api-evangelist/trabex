@@ -50,7 +50,7 @@ apis:
         url: json-schema/trabex-shipment-schema.json
       - type: JSONStructure
         url: json-structure/trabex-shipment-structure.json
-      - type: JSONLd
+      - type: JSONLD
         url: json-ld/trabex-context.jsonld
       - type: SpectralRules
         url: rules/trabex-rules.yml
