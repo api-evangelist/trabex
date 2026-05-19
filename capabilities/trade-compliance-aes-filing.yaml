@@ -1,0 +1,119 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Trabex Trade Compliance API — AES Filing
+  description: 'Trabex Trade Compliance API — AES Filing. 2 operations. Lead operation: Get AES Filings. Self-contained Naftiko
+    capability covering one Trabex business surface.'
+  tags:
+  - Trabex
+  - AES Filing
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TRABEX_API_KEY: TRABEX_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: trade-compliance-aes-filing
+    baseUri: https://api.trabex.io
+    description: Trabex Trade Compliance API — AES Filing business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-aes-filings
+      path: /v1/aes/filings
+      operations:
+      - name: getaesfilings
+        method: GET
+        description: Get AES Filings
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: status
+          in: query
+          type: string
+          description: Filter filings by AES submission status.
+        - name: page
+          in: query
+          type: integer
+          description: Page number for paginated results.
+    - name: v1-aes-filings-shipmentId
+      path: /v1/aes/filings/{shipmentId}
+      operations:
+      - name: submitaesfiling
+        method: POST
+        description: Submit AES Filing
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: X-API-Key
+      value: '{{env.TRABEX_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: trade-compliance-aes-filing-rest
+    port: 8080
+    description: REST adapter for Trabex Trade Compliance API — AES Filing. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/aes/filings
+      name: v1-aes-filings
+      description: REST surface for v1-aes-filings.
+      operations:
+      - method: GET
+        name: getaesfilings
+        description: Get AES Filings
+        call: trade-compliance-aes-filing.getaesfilings
+        with:
+          status: rest.status
+          page: rest.page
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/aes/filings/{shipmentid}
+      name: v1-aes-filings-shipmentid
+      description: REST surface for v1-aes-filings-shipmentId.
+      operations:
+      - method: POST
+        name: submitaesfiling
+        description: Submit AES Filing
+        call: trade-compliance-aes-filing.submitaesfiling
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: trade-compliance-aes-filing-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Trabex Trade Compliance API — AES Filing. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: get-aes-filings
+      description: Get AES Filings
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: trade-compliance-aes-filing.getaesfilings
+      with:
+        status: tools.status
+        page: tools.page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: submit-aes-filing
+      description: Submit AES Filing
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: trade-compliance-aes-filing.submitaesfiling
+      outputParameters:
+      - type: object
+        mapping: $.
