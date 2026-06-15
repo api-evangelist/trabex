@@ -1,0 +1,277 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Trabex Trade Compliance API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-Key",
+      "value": "{{X-API-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Shipments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Shipments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.trabex.io/v1/shipments",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by shipment compliance status."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of records per page."
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Filter shipments created on or after this date (ISO 8601)."
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "Filter shipments created on or before this date (ISO 8601)."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of shipments submitted to the Trabex platform for compliance processing. Supports filtering by status, date range, and other criteria."
+        },
+        {
+          "info": {
+            "name": "Create Shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.trabex.io/v1/shipments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a new export shipment for compliance processing. Triggers automated restricted party screening, AES filing eligibility assessment, and export documentation generation."
+        },
+        {
+          "info": {
+            "name": "Get Shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.trabex.io/v1/shipments/:shipmentId",
+            "params": [
+              {
+                "name": "shipmentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the shipment."
+              }
+            ]
+          },
+          "docs": "Retrieves details of a specific shipment including compliance status, screening results, AES filing status, and generated documents."
+        },
+        {
+          "info": {
+            "name": "Update Shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.trabex.io/v1/shipments/:shipmentId",
+            "params": [
+              {
+                "name": "shipmentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the shipment."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing shipment with corrected information before or during compliance processing. Triggers re-screening and re-evaluation of the updated shipment data."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Screening",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Screen Party",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.trabex.io/v1/screening/check",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Performs a real-time restricted party screening check against denied party lists, specially designated nationals (SDN), debarred lists, and embargoed country databases. Returns match results with risk scores and match details."
+        },
+        {
+          "info": {
+            "name": "Batch Screen Parties",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.trabex.io/v1/screening/batch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Performs restricted party screening for multiple parties in a single request. Ideal for bulk screening of customer lists, vendor databases, or order queues requiring simultaneous compliance checks."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Documents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Shipment Documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.trabex.io/v1/documents/:shipmentId",
+            "params": [
+              {
+                "name": "shipmentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the shipment."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of generated export compliance documents for a specific shipment including commercial invoices, packing lists, certificates of origin, and shipper's letter of instruction."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "AES Filing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get AES Filings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.trabex.io/v1/aes/filings",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter filings by AES submission status."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of Electronic Export Information (EEI) filings submitted to the Automated Export System (AES). Returns filing status and internal transaction numbers (ITN)."
+        },
+        {
+          "info": {
+            "name": "Submit AES Filing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.trabex.io/v1/aes/filings/:shipmentId",
+            "params": [
+              {
+                "name": "shipmentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the shipment."
+              }
+            ]
+          },
+          "docs": "Submits Electronic Export Information (EEI) to the Automated Export System (AES) for the specified shipment. Returns the AES confirmation and Internal Transaction Number (ITN) on success."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Companies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Companies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.trabex.io/v1/companies"
+          },
+          "docs": "Retrieves a list of companies and trading partners stored in the Trabex platform for use in shipment and compliance workflows."
+        },
+        {
+          "info": {
+            "name": "Create Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.trabex.io/v1/companies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new company record for use as a shipper, consignee, or freight forwarder in trade compliance workflows."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
