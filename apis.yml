@@ -54,6 +54,10 @@ apis:
       - type: Support
         url: https://support.trabex.io/support/home
 common:
+  - type: DomainSecurity
+    url: security/trabex-domain-security.yml
+  - type: Authentication
+    url: authentication/trabex-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/trabex-export-compliance
   - type: Website

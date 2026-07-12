@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/trabex-trade-compliance-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: apiKeyAuth
+  type: apiKey
+  in: header
+  parameter: X-API-Key
+  description: Trabex API key for authenticating requests. Obtain your API key from the Trabex
+    customer portal at support.trabex.io.
+  sources:
+  - openapi/trabex-trade-compliance-openapi.yml
