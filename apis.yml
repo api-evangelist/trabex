@@ -54,6 +54,8 @@ apis:
       - type: Support
         url: https://support.trabex.io/support/home
 common:
+  - type: AgenticAccess
+    url: agentic-access/trabex-agentic-access.yml
   - type: DomainSecurity
     url: security/trabex-domain-security.yml
   - type: Authentication
