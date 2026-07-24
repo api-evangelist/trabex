@@ -1,0 +1,107 @@
+openapi: 3.1.0
+info:
+  title: Trabex Trade Compliance AES Filing Documents API
+  description: The Trabex Trade Compliance API provides programmatic access to export compliance automation including shipment data submission, export documentation generation, Automated Export System (AES) filing, and restricted party screening (RPS). The API enables organizations to integrate compliance workflows directly into logistics and ERP systems, supporting single shipments, batch processing, and continuous screening operations. Trabex automates document creation, AES filing, and restricted party screening to reduce export compliance risk and errors.
+  version: '1.0'
+  contact:
+    name: Trabex Support
+    url: https://support.trabex.io/support/home
+  termsOfService: https://trabex.io
+servers:
+- url: https://api.trabex.io
+  description: Production Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Documents
+  description: Generate and retrieve export compliance documents including commercial invoices, packing lists, certificates of origin, and shipper's letter of instruction.
+paths:
+  /v1/documents/{shipmentId}:
+    get:
+      operationId: getShipmentDocuments
+      summary: Get Shipment Documents
+      description: Retrieves a list of generated export compliance documents for a specific shipment including commercial invoices, packing lists, certificates of origin, and shipper's letter of instruction.
+      tags:
+      - Documents
+      parameters:
+      - $ref: '#/components/parameters/ShipmentId'
+      responses:
+        '200':
+          description: Successfully retrieved shipment documents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentsResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Shipment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      description: Standard error response from the Trabex API.
+      properties:
+        code:
+          type: string
+          description: Error code identifier.
+        message:
+          type: string
+          description: Human-readable error description.
+        details:
+          type: array
+          description: Additional error detail messages.
+          items:
+            type: string
+    DocumentsResponse:
+      type: object
+      description: List of export compliance documents for a shipment.
+      properties:
+        shipmentId:
+          type: string
+        documents:
+          type: array
+          items:
+            type: object
+            properties:
+              documentType:
+                type: string
+                description: Type of document.
+                enum:
+                - CommercialInvoice
+                - PackingList
+                - CertificateOfOrigin
+                - ShippersLetterOfInstruction
+                - AESConfirmation
+              downloadUrl:
+                type: string
+                format: uri
+                description: URL to download the document.
+              generatedAt:
+                type: string
+                format: date-time
+  parameters:
+    ShipmentId:
+      name: shipmentId
+      in: path
+      required: true
+      description: The unique identifier of the shipment.
+      schema:
+        type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Trabex API key for authenticating requests. Obtain your API key from the Trabex customer portal at support.trabex.io.
+externalDocs:
+  description: Trabex API Documentation
+  url: https://apidocs.trabex.io/

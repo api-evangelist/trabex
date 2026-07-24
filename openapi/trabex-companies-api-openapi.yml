@@ -1,0 +1,135 @@
+openapi: 3.1.0
+info:
+  title: Trabex Trade Compliance AES Filing Companies API
+  description: The Trabex Trade Compliance API provides programmatic access to export compliance automation including shipment data submission, export documentation generation, Automated Export System (AES) filing, and restricted party screening (RPS). The API enables organizations to integrate compliance workflows directly into logistics and ERP systems, supporting single shipments, batch processing, and continuous screening operations. Trabex automates document creation, AES filing, and restricted party screening to reduce export compliance risk and errors.
+  version: '1.0'
+  contact:
+    name: Trabex Support
+    url: https://support.trabex.io/support/home
+  termsOfService: https://trabex.io
+servers:
+- url: https://api.trabex.io
+  description: Production Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Companies
+  description: Manage company and party information used in trade compliance workflows including shippers, consignees, and freight forwarders.
+paths:
+  /v1/companies:
+    get:
+      operationId: getCompanies
+      summary: Get Companies
+      description: Retrieves a list of companies and trading partners stored in the Trabex platform for use in shipment and compliance workflows.
+      tags:
+      - Companies
+      responses:
+        '200':
+          description: Successfully retrieved companies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompaniesResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      operationId: createCompany
+      summary: Create Company
+      description: Creates a new company record for use as a shipper, consignee, or freight forwarder in trade compliance workflows.
+      tags:
+      - Companies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Company'
+      responses:
+        '201':
+          description: Company successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '400':
+          description: Invalid company data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      description: Standard error response from the Trabex API.
+      properties:
+        code:
+          type: string
+          description: Error code identifier.
+        message:
+          type: string
+          description: Human-readable error description.
+        details:
+          type: array
+          description: Additional error detail messages.
+          items:
+            type: string
+    CompaniesResponse:
+      type: object
+      description: List of companies in the Trabex platform.
+      properties:
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Company'
+    Company:
+      type: object
+      description: A company or trading party record in the Trabex platform.
+      required:
+      - name
+      - country
+      properties:
+        companyId:
+          type: string
+          description: Unique company identifier (assigned on creation).
+        name:
+          type: string
+          description: Full legal name of the company.
+        address:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+          description: ISO 3166-1 alpha-2 country code.
+        postalCode:
+          type: string
+        role:
+          type: string
+          description: Primary role in trade transactions.
+          enum:
+          - Shipper
+          - Consignee
+          - FreightForwarder
+          - BrokerAgent
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Trabex API key for authenticating requests. Obtain your API key from the Trabex customer portal at support.trabex.io.
+externalDocs:
+  description: Trabex API Documentation
+  url: https://apidocs.trabex.io/

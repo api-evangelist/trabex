@@ -1,0 +1,194 @@
+openapi: 3.1.0
+info:
+  title: Trabex Trade Compliance AES Filing Screening API
+  description: The Trabex Trade Compliance API provides programmatic access to export compliance automation including shipment data submission, export documentation generation, Automated Export System (AES) filing, and restricted party screening (RPS). The API enables organizations to integrate compliance workflows directly into logistics and ERP systems, supporting single shipments, batch processing, and continuous screening operations. Trabex automates document creation, AES filing, and restricted party screening to reduce export compliance risk and errors.
+  version: '1.0'
+  contact:
+    name: Trabex Support
+    url: https://support.trabex.io/support/home
+  termsOfService: https://trabex.io
+servers:
+- url: https://api.trabex.io
+  description: Production Server
+security:
+- apiKeyAuth: []
+tags:
+- name: Screening
+  description: Perform restricted party screening (RPS) against denied party lists, sanctioned entities, and embargoed countries to identify compliance risks.
+paths:
+  /v1/screening/check:
+    post:
+      operationId: screenParty
+      summary: Screen Party
+      description: Performs a real-time restricted party screening check against denied party lists, specially designated nationals (SDN), debarred lists, and embargoed country databases. Returns match results with risk scores and match details.
+      tags:
+      - Screening
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScreeningRequest'
+      responses:
+        '200':
+          description: Screening check completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScreeningResponse'
+        '400':
+          description: Invalid screening request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v1/screening/batch:
+    post:
+      operationId: screenPartiesBatch
+      summary: Batch Screen Parties
+      description: Performs restricted party screening for multiple parties in a single request. Ideal for bulk screening of customer lists, vendor databases, or order queues requiring simultaneous compliance checks.
+      tags:
+      - Screening
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - parties
+              properties:
+                parties:
+                  type: array
+                  description: List of parties to screen.
+                  items:
+                    $ref: '#/components/schemas/Party'
+      responses:
+        '200':
+          description: Batch screening completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ScreeningResponse'
+        '400':
+          description: Invalid batch request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    ScreeningResponse:
+      type: object
+      description: Results of a restricted party screening check.
+      properties:
+        party:
+          $ref: '#/components/schemas/Party'
+        riskLevel:
+          type: string
+          description: Overall compliance risk level.
+          enum:
+          - Clear
+          - Review
+          - Blocked
+        matches:
+          type: array
+          description: List of potential matches found in screening lists.
+          items:
+            type: object
+            properties:
+              listName:
+                type: string
+                description: Name of the list where match was found.
+              matchedName:
+                type: string
+                description: Name of the matched entity on the list.
+              matchScore:
+                type: number
+                format: double
+                description: Confidence score of the match (0-100).
+              reason:
+                type: string
+                description: Reason for inclusion on the list.
+    Error:
+      type: object
+      description: Standard error response from the Trabex API.
+      properties:
+        code:
+          type: string
+          description: Error code identifier.
+        message:
+          type: string
+          description: Human-readable error description.
+        details:
+          type: array
+          description: Additional error detail messages.
+          items:
+            type: string
+    ScreeningRequest:
+      type: object
+      description: Request body for a restricted party screening check.
+      required:
+      - party
+      properties:
+        party:
+          $ref: '#/components/schemas/Party'
+        listTypes:
+          type: array
+          description: Specific screening lists to check. If omitted, all applicable lists are checked.
+          items:
+            type: string
+            enum:
+            - SDN
+            - DPL
+            - EL
+            - BIS
+            - OFAC
+    Party:
+      type: object
+      description: A trading party for restricted party screening.
+      properties:
+        name:
+          type: string
+          description: Full legal name of the party.
+        address:
+          type: string
+          description: Street address.
+        city:
+          type: string
+          description: City.
+        state:
+          type: string
+          description: State or province.
+        country:
+          type: string
+          description: ISO 3166-1 alpha-2 country code.
+        postalCode:
+          type: string
+          description: Postal or zip code.
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Trabex API key for authenticating requests. Obtain your API key from the Trabex customer portal at support.trabex.io.
+externalDocs:
+  description: Trabex API Documentation
+  url: https://apidocs.trabex.io/

@@ -1,0 +1,156 @@
+openapi: 3.1.0
+info:
+  title: Trabex Trade Compliance AES Filing API
+  description: The Trabex Trade Compliance API provides programmatic access to export compliance automation including shipment data submission, export documentation generation, Automated Export System (AES) filing, and restricted party screening (RPS). The API enables organizations to integrate compliance workflows directly into logistics and ERP systems, supporting single shipments, batch processing, and continuous screening operations. Trabex automates document creation, AES filing, and restricted party screening to reduce export compliance risk and errors.
+  version: '1.0'
+  contact:
+    name: Trabex Support
+    url: https://support.trabex.io/support/home
+  termsOfService: https://trabex.io
+servers:
+- url: https://api.trabex.io
+  description: Production Server
+security:
+- apiKeyAuth: []
+tags:
+- name: AES Filing
+  description: Submit and manage Electronic Export Information (EEI) filings to the Automated Export System (AES) for export reporting compliance.
+paths:
+  /v1/aes/filings:
+    get:
+      operationId: getAESFilings
+      summary: Get AES Filings
+      description: Retrieves a list of Electronic Export Information (EEI) filings submitted to the Automated Export System (AES). Returns filing status and internal transaction numbers (ITN).
+      tags:
+      - AES Filing
+      parameters:
+      - name: status
+        in: query
+        description: Filter filings by AES submission status.
+        required: false
+        schema:
+          type: string
+          enum:
+          - Pending
+          - Accepted
+          - Fatal
+          - Rejected
+      - name: page
+        in: query
+        description: Page number for paginated results.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+      responses:
+        '200':
+          description: Successfully retrieved AES filings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AESFilingsResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v1/aes/filings/{shipmentId}:
+    post:
+      operationId: submitAESFiling
+      summary: Submit AES Filing
+      description: Submits Electronic Export Information (EEI) to the Automated Export System (AES) for the specified shipment. Returns the AES confirmation and Internal Transaction Number (ITN) on success.
+      tags:
+      - AES Filing
+      parameters:
+      - $ref: '#/components/parameters/ShipmentId'
+      responses:
+        '200':
+          description: AES filing successfully submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AESFilingResponse'
+        '400':
+          description: Missing required export data for AES filing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Shipment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      description: Standard error response from the Trabex API.
+      properties:
+        code:
+          type: string
+          description: Error code identifier.
+        message:
+          type: string
+          description: Human-readable error description.
+        details:
+          type: array
+          description: Additional error detail messages.
+          items:
+            type: string
+    AESFilingsResponse:
+      type: object
+      description: Paginated list of AES filings.
+      properties:
+        total:
+          type: integer
+        filings:
+          type: array
+          items:
+            $ref: '#/components/schemas/AESFilingResponse'
+    AESFilingResponse:
+      type: object
+      description: Result of an AES filing submission.
+      properties:
+        shipmentId:
+          type: string
+        status:
+          type: string
+          enum:
+          - Accepted
+          - Fatal
+          - Rejected
+        itn:
+          type: string
+          description: Internal Transaction Number assigned by AES.
+        message:
+          type: string
+          description: AES response message.
+        filedAt:
+          type: string
+          format: date-time
+  parameters:
+    ShipmentId:
+      name: shipmentId
+      in: path
+      required: true
+      description: The unique identifier of the shipment.
+      schema:
+        type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Trabex API key for authenticating requests. Obtain your API key from the Trabex customer portal at support.trabex.io.
+externalDocs:
+  description: Trabex API Documentation
+  url: https://apidocs.trabex.io/
