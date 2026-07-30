@@ -6,7 +6,20 @@ description: >-
   workflows including shipment data ingestion, export documentation generation, financial reporting, and ancillary
   compliance data to help organizations manage global trade risk.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/trabex.png
 tags:
   - Compliance
   - Export Control
@@ -19,40 +32,135 @@ created: '2026-03-16'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: trabex:trade-compliance
-    name: Trabex Trade Compliance API
-    description: >-
-      The Trabex Trade Compliance API provides programmatic access to export compliance automation including shipment
-      data submission, export documentation generation, Automated Export System (AES) filing, and restricted party
-      screening. The API enables organizations to integrate compliance workflows into logistics and ERP systems,
-      supporting single shipments, batch screening, and continuous compliance operations.
-    humanURL: https://apidocs.trabex.io/
-    baseURL: https://api.trabex.io
-    tags:
-      - AES Filing
-      - Compliance
-      - Export Control
-      - Logistics
-      - Restricted Party Screening
-      - Shipment Management
-      - Trade
-    properties:
-      - type: Documentation
-        url: https://apidocs.trabex.io/
-      - type: OpenAPI
-        url: openapi/trabex-trade-compliance-openapi.yml
-      - type: JSONSchema
-        url: json-schema/trabex-shipment-schema.json
-      - type: JSONStructure
-        url: json-structure/trabex-shipment-structure.json
-      - type: JSONLD
-        url: json-ld/trabex-context.jsonld
-      - type: SpectralRules
-        url: rules/trabex-rules.yml
-      - type: Vocabulary
-        url: vocabulary/trabex-vocabulary.yml
-      - type: Support
-        url: https://support.trabex.io/support/home
+- aid: trabex:trabex-aes-filing-api
+  name: Trabex AES Filing API
+  description: >-
+    Submit and manage Electronic Export Information (EEI) filings to the Automated Export System (AES)
+    for export reporting compliance.
+  humanURL: https://apidocs.trabex.io/
+  baseURL: https://api.trabex.io
+  tags:
+  - AES Filing
+  properties:
+  - type: OpenAPI
+    url: openapi/trabex-aes-filing-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.trabex.io/
+  - type: JSONSchema
+    url: json-schema/trabex-shipment-schema.json
+  - type: JSONStructure
+    url: json-structure/trabex-shipment-structure.json
+  - type: JSONLD
+    url: json-ld/trabex-context.jsonld
+  - type: SpectralRules
+    url: rules/trabex-rules.yml
+  - type: Vocabulary
+    url: vocabulary/trabex-vocabulary.yml
+  - type: Support
+    url: https://support.trabex.io/support/home
+- aid: trabex:trabex-companies-api
+  name: Trabex Companies API
+  description: >-
+    Manage company and party information used in trade compliance workflows including shippers, consignees,
+    and freight forwarders.
+  humanURL: https://apidocs.trabex.io/
+  baseURL: https://api.trabex.io
+  tags:
+  - Companies
+  properties:
+  - type: OpenAPI
+    url: openapi/trabex-companies-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.trabex.io/
+  - type: JSONSchema
+    url: json-schema/trabex-shipment-schema.json
+  - type: JSONStructure
+    url: json-structure/trabex-shipment-structure.json
+  - type: JSONLD
+    url: json-ld/trabex-context.jsonld
+  - type: SpectralRules
+    url: rules/trabex-rules.yml
+  - type: Vocabulary
+    url: vocabulary/trabex-vocabulary.yml
+  - type: Support
+    url: https://support.trabex.io/support/home
+- aid: trabex:trabex-documents-api
+  name: Trabex Documents API
+  description: >-
+    Generate and retrieve export compliance documents including commercial invoices, packing lists, certificates
+    of origin, and shipper's letter of instruction.
+  humanURL: https://apidocs.trabex.io/
+  baseURL: https://api.trabex.io
+  tags:
+  - Documents
+  properties:
+  - type: OpenAPI
+    url: openapi/trabex-documents-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.trabex.io/
+  - type: JSONSchema
+    url: json-schema/trabex-shipment-schema.json
+  - type: JSONStructure
+    url: json-structure/trabex-shipment-structure.json
+  - type: JSONLD
+    url: json-ld/trabex-context.jsonld
+  - type: SpectralRules
+    url: rules/trabex-rules.yml
+  - type: Vocabulary
+    url: vocabulary/trabex-vocabulary.yml
+  - type: Support
+    url: https://support.trabex.io/support/home
+- aid: trabex:trabex-screening-api
+  name: Trabex Screening API
+  description: >-
+    Perform restricted party screening (RPS) against denied party lists, sanctioned entities, and embargoed
+    countries to identify compliance risks.
+  humanURL: https://apidocs.trabex.io/
+  baseURL: https://api.trabex.io
+  tags:
+  - Screening
+  properties:
+  - type: OpenAPI
+    url: openapi/trabex-screening-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.trabex.io/
+  - type: JSONSchema
+    url: json-schema/trabex-shipment-schema.json
+  - type: JSONStructure
+    url: json-structure/trabex-shipment-structure.json
+  - type: JSONLD
+    url: json-ld/trabex-context.jsonld
+  - type: SpectralRules
+    url: rules/trabex-rules.yml
+  - type: Vocabulary
+    url: vocabulary/trabex-vocabulary.yml
+  - type: Support
+    url: https://support.trabex.io/support/home
+- aid: trabex:trabex-shipments-api
+  name: Trabex Shipments API
+  description: >-
+    Submit and manage export shipment data for compliance processing, AES filing, and documentation generation.
+  humanURL: https://apidocs.trabex.io/
+  baseURL: https://api.trabex.io
+  tags:
+  - Shipments
+  properties:
+  - type: OpenAPI
+    url: openapi/trabex-shipments-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.trabex.io/
+  - type: JSONSchema
+    url: json-schema/trabex-shipment-schema.json
+  - type: JSONStructure
+    url: json-structure/trabex-shipment-structure.json
+  - type: JSONLD
+    url: json-ld/trabex-context.jsonld
+  - type: SpectralRules
+    url: rules/trabex-rules.yml
+  - type: Vocabulary
+    url: vocabulary/trabex-vocabulary.yml
+  - type: Support
+    url: https://support.trabex.io/support/home
 common:
   - type: AgenticAccess
     url: agentic-access/trabex-agentic-access.yml
