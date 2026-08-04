@@ -1,0 +1,22 @@
+{
+  "provider": "trabex",
+  "sources": [
+    "trabex-aes-filing-api-openapi.yml",
+    "trabex-companies-api-openapi.yml",
+    "trabex-documents-api-openapi.yml",
+    "trabex-screening-api-openapi.yml",
+    "trabex-shipments-api-openapi.yml"
+  ],
+  "outputs": [
+    "trabex-aes-filing-api-openapi.yml",
+    "trabex-companies-api-openapi.yml",
+    "trabex-documents-api-openapi.yml",
+    "trabex-screening-api-openapi.yml",
+    "trabex-shipments-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
