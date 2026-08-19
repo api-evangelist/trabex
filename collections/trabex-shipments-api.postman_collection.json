@@ -1,0 +1,957 @@
+{
+  "item": [
+    {
+      "id": "3e971a17-a367-4ae7-8c02-2054bfca4b91",
+      "name": "Shipments",
+      "description": {
+        "content": "Submit and manage export shipment data for compliance processing, AES filing, and documentation generation.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d58c89f4-cbe8-424d-a726-5bbb4644c890",
+          "name": "Get Shipments",
+          "request": {
+            "name": "Get Shipments",
+            "description": {
+              "content": "Retrieves a list of shipments submitted to the Trabex platform for compliance processing. Supports filtering by status, date range, and other criteria.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "shipments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by shipment compliance status."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Page number for paginated results."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "Number of records per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "Filter shipments created on or after this date (ISO 8601)."
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "Filter shipments created on or before this date (ISO 8601)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9751eba0-66d3-41a3-b410-ff02a997cdfa",
+              "name": "Successfully retrieved shipments",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "shipments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 1598,\n  \"page\": 1365,\n  \"pageSize\": 9710,\n  \"shipments\": [\n    {\n      \"shipmentId\": \"string\",\n      \"status\": \"Flagged\",\n      \"screeningStatus\": \"Review\",\n      \"aesStatus\": \"Accepted\",\n      \"itn\": \"string\",\n      \"createdAt\": \"1972-08-12T20:59:12.242Z\",\n      \"updatedAt\": \"1974-04-11T19:58:55.512Z\",\n      \"shipper\": {\n        \"name\": \"string\",\n        \"address\": \"string\",\n        \"city\": \"string\",\n        \"state\": \"string\",\n        \"country\": \"string\",\n        \"postalCode\": \"string\"\n      },\n      \"consignee\": {\n        \"name\": \"string\",\n        \"address\": \"string\",\n        \"city\": \"string\",\n        \"state\": \"string\",\n        \"country\": \"string\",\n        \"postalCode\": \"string\"\n      },\n      \"destinationCountry\": \"string\",\n      \"lineItems\": [\n        {\n          \"description\": \"string\",\n          \"scheduleBNumber\": \"string\",\n          \"quantity\": 8140.930310928119,\n          \"unitOfMeasure\": \"string\",\n          \"valueUSD\": 9732.835648967095,\n          \"countryOfOrigin\": \"string\",\n          \"eccnNumber\": \"string\"\n        },\n        {\n          \"description\": \"string\",\n          \"scheduleBNumber\": \"string\",\n          \"quantity\": 4819.840007079839,\n          \"unitOfMeasure\": \"string\",\n          \"valueUSD\": 4111.455277283583,\n          \"countryOfOrigin\": \"string\",\n          \"eccnNumber\": \"string\"\n        }\n      ]\n    },\n    {\n      \"shipmentId\": \"string\",\n      \"status\": \"Approved\",\n      \"screeningStatus\": \"Review\",\n      \"aesStatus\": \"Fatal\",\n      \"itn\": \"string\",\n      \"createdAt\": \"1982-12-22T23:00:07.064Z\",\n      \"updatedAt\": \"2007-02-14T23:24:34.684Z\",\n      \"shipper\": {\n        \"name\": \"string\",\n        \"address\": \"string\",\n        \"city\": \"string\",\n        \"state\": \"string\",\n        \"country\": \"string\",\n        \"postalCode\": \"string\"\n      },\n      \"consignee\": {\n        \"name\": \"string\",\n        \"address\": \"string\",\n        \"city\": \"string\",\n        \"state\": \"string\",\n        \"country\": \"string\",\n        \"postalCode\": \"string\"\n      },\n      \"destinationCountry\": \"string\",\n      \"lineItems\": [\n        {\n          \"description\": \"string\",\n          \"scheduleBNumber\": \"string\",\n          \"quantity\": 2157.4639783774783,\n          \"unitOfMeasure\": \"string\",\n          \"valueUSD\": 1272.0571742081022,\n          \"countryOfOrigin\": \"string\",\n          \"eccnNumber\": \"string\"\n        },\n        {\n          \"description\": \"string\",\n          \"scheduleBNumber\": \"string\",\n          \"quantity\": 145.2621209613003,\n          \"unitOfMeasure\": \"string\",\n          \"valueUSD\": 703.7855577403118,\n          \"countryOfOrigin\": \"string\",\n          \"eccnNumber\": \"string\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "defdd4cf-8c71-4330-a328-253fa6363e08",
+              "name": "Unauthorized - invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "shipments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c1fc0fa-f318-4a9e-96c2-9d62f663324f",
+          "name": "Create Shipment",
+          "request": {
+            "name": "Create Shipment",
+            "description": {
+              "content": "Submits a new export shipment for compliance processing. Triggers automated restricted party screening, AES filing eligibility assessment, and export documentation generation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "shipments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shipper\": {\n    \"name\": \"<string>\",\n    \"address\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"country\": \"<string>\",\n    \"postalCode\": \"<string>\"\n  },\n  \"consignee\": {\n    \"name\": \"<string>\",\n    \"address\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"country\": \"<string>\",\n    \"postalCode\": \"<string>\"\n  },\n  \"destinationCountry\": \"<string>\",\n  \"lineItems\": [\n    {\n      \"description\": \"<string>\",\n      \"scheduleBNumber\": \"<string>\",\n      \"quantity\": \"<number>\",\n      \"unitOfMeasure\": \"<string>\",\n      \"valueUSD\": \"<double>\",\n      \"countryOfOrigin\": \"<string>\",\n      \"eccnNumber\": \"<string>\"\n    },\n    {\n      \"description\": \"<string>\",\n      \"scheduleBNumber\": \"<string>\",\n      \"quantity\": \"<number>\",\n      \"unitOfMeasure\": \"<string>\",\n      \"valueUSD\": \"<double>\",\n      \"countryOfOrigin\": \"<string>\",\n      \"eccnNumber\": \"<string>\"\n    }\n  ],\n  \"freightForwarder\": {\n    \"name\": \"<string>\",\n    \"address\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"country\": \"<string>\",\n    \"postalCode\": \"<string>\"\n  },\n  \"exportDate\": \"<date>\",\n  \"carrier\": \"<string>\",\n  \"trackingNumber\": \"<string>\",\n  \"referenceNumber\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "201f2d46-d52e-4269-8587-fe88df9d0fe2",
+              "name": "Shipment successfully created and queued for processing",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "shipments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shipper\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"consignee\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"destinationCountry\": \"<string>\",\n  \"lineItems\": [\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 9553.995751674873,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 1499.1439266055306,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    },\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 1715.5694507620412,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 3597.42361565357,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    }\n  ],\n  \"freightForwarder\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"exportDate\": \"<date>\",\n  \"carrier\": \"<string>\",\n  \"trackingNumber\": \"<string>\",\n  \"referenceNumber\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"shipmentId\": \"string\",\n  \"status\": \"Approved\",\n  \"screeningStatus\": \"Clear\",\n  \"aesStatus\": \"Pending\",\n  \"itn\": \"string\",\n  \"createdAt\": \"1976-12-03T08:51:25.442Z\",\n  \"updatedAt\": \"1981-11-20T13:50:50.776Z\",\n  \"shipper\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"consignee\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"destinationCountry\": \"string\",\n  \"lineItems\": [\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 2161.647481134673,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 4211.055802203284,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    },\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 5058.1405989745235,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 7911.089007673529,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f73cc279-b158-41e6-a518-ec7acdbefabf",
+              "name": "Invalid shipment data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "shipments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shipper\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"consignee\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"destinationCountry\": \"<string>\",\n  \"lineItems\": [\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 9553.995751674873,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 1499.1439266055306,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    },\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 1715.5694507620412,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 3597.42361565357,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    }\n  ],\n  \"freightForwarder\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"exportDate\": \"<date>\",\n  \"carrier\": \"<string>\",\n  \"trackingNumber\": \"<string>\",\n  \"referenceNumber\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b396cfc-ca28-4fb9-b981-cb12253a7585",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "shipments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shipper\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"consignee\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"destinationCountry\": \"<string>\",\n  \"lineItems\": [\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 9553.995751674873,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 1499.1439266055306,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    },\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 1715.5694507620412,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 3597.42361565357,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    }\n  ],\n  \"freightForwarder\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"exportDate\": \"<date>\",\n  \"carrier\": \"<string>\",\n  \"trackingNumber\": \"<string>\",\n  \"referenceNumber\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "43cca2b9-cd52-4de6-9610-3d7b009d570d",
+          "name": "Get Shipment",
+          "request": {
+            "name": "Get Shipment",
+            "description": {
+              "content": "Retrieves details of a specific shipment including compliance status, screening results, AES filing status, and generated documents.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "shipments",
+                ":shipmentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shipmentId",
+                  "description": "(Required) The unique identifier of the shipment."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7db2ae12-f5ab-4e6f-8b48-2974d3a844ba",
+              "name": "Successfully retrieved shipment",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "shipments",
+                    ":shipmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shipmentId",
+                      "description": "(Required) The unique identifier of the shipment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"shipmentId\": \"string\",\n  \"status\": \"Approved\",\n  \"screeningStatus\": \"Clear\",\n  \"aesStatus\": \"Pending\",\n  \"itn\": \"string\",\n  \"createdAt\": \"1976-12-03T08:51:25.442Z\",\n  \"updatedAt\": \"1981-11-20T13:50:50.776Z\",\n  \"shipper\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"consignee\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"destinationCountry\": \"string\",\n  \"lineItems\": [\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 2161.647481134673,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 4211.055802203284,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    },\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 5058.1405989745235,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 7911.089007673529,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a086256-aef5-400a-8f45-0f7cd82acc58",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "shipments",
+                    ":shipmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shipmentId",
+                      "description": "(Required) The unique identifier of the shipment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a578849-b4a1-466a-86db-30cf3edea95f",
+              "name": "Shipment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "shipments",
+                    ":shipmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shipmentId",
+                      "description": "(Required) The unique identifier of the shipment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "18592e16-0234-4a04-a86e-da9245f19647",
+          "name": "Update Shipment",
+          "request": {
+            "name": "Update Shipment",
+            "description": {
+              "content": "Updates an existing shipment with corrected information before or during compliance processing. Triggers re-screening and re-evaluation of the updated shipment data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "shipments",
+                ":shipmentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shipmentId",
+                  "description": "(Required) The unique identifier of the shipment."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shipper\": {\n    \"name\": \"<string>\",\n    \"address\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"country\": \"<string>\",\n    \"postalCode\": \"<string>\"\n  },\n  \"consignee\": {\n    \"name\": \"<string>\",\n    \"address\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"country\": \"<string>\",\n    \"postalCode\": \"<string>\"\n  },\n  \"destinationCountry\": \"<string>\",\n  \"lineItems\": [\n    {\n      \"description\": \"<string>\",\n      \"scheduleBNumber\": \"<string>\",\n      \"quantity\": \"<number>\",\n      \"unitOfMeasure\": \"<string>\",\n      \"valueUSD\": \"<double>\",\n      \"countryOfOrigin\": \"<string>\",\n      \"eccnNumber\": \"<string>\"\n    },\n    {\n      \"description\": \"<string>\",\n      \"scheduleBNumber\": \"<string>\",\n      \"quantity\": \"<number>\",\n      \"unitOfMeasure\": \"<string>\",\n      \"valueUSD\": \"<double>\",\n      \"countryOfOrigin\": \"<string>\",\n      \"eccnNumber\": \"<string>\"\n    }\n  ],\n  \"freightForwarder\": {\n    \"name\": \"<string>\",\n    \"address\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"country\": \"<string>\",\n    \"postalCode\": \"<string>\"\n  },\n  \"exportDate\": \"<date>\",\n  \"carrier\": \"<string>\",\n  \"trackingNumber\": \"<string>\",\n  \"referenceNumber\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "edcf546e-b23c-498c-aef4-c5188b8768bc",
+              "name": "Shipment successfully updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "shipments",
+                    ":shipmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shipmentId",
+                      "description": "(Required) The unique identifier of the shipment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shipper\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"consignee\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"destinationCountry\": \"<string>\",\n  \"lineItems\": [\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 9553.995751674873,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 1499.1439266055306,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    },\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 1715.5694507620412,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 3597.42361565357,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    }\n  ],\n  \"freightForwarder\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"exportDate\": \"<date>\",\n  \"carrier\": \"<string>\",\n  \"trackingNumber\": \"<string>\",\n  \"referenceNumber\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"shipmentId\": \"string\",\n  \"status\": \"Approved\",\n  \"screeningStatus\": \"Clear\",\n  \"aesStatus\": \"Pending\",\n  \"itn\": \"string\",\n  \"createdAt\": \"1976-12-03T08:51:25.442Z\",\n  \"updatedAt\": \"1981-11-20T13:50:50.776Z\",\n  \"shipper\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"consignee\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"destinationCountry\": \"string\",\n  \"lineItems\": [\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 2161.647481134673,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 4211.055802203284,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    },\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 5058.1405989745235,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 7911.089007673529,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c4c0480-b237-4a27-b202-00561f67568b",
+              "name": "Invalid shipment data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "shipments",
+                    ":shipmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shipmentId",
+                      "description": "(Required) The unique identifier of the shipment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shipper\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"consignee\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"destinationCountry\": \"<string>\",\n  \"lineItems\": [\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 9553.995751674873,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 1499.1439266055306,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    },\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 1715.5694507620412,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 3597.42361565357,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    }\n  ],\n  \"freightForwarder\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"exportDate\": \"<date>\",\n  \"carrier\": \"<string>\",\n  \"trackingNumber\": \"<string>\",\n  \"referenceNumber\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e838e82-772a-45c3-8905-0aaa6fea323d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "shipments",
+                    ":shipmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shipmentId",
+                      "description": "(Required) The unique identifier of the shipment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shipper\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"consignee\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"destinationCountry\": \"<string>\",\n  \"lineItems\": [\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 9553.995751674873,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 1499.1439266055306,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    },\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 1715.5694507620412,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 3597.42361565357,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    }\n  ],\n  \"freightForwarder\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"exportDate\": \"<date>\",\n  \"carrier\": \"<string>\",\n  \"trackingNumber\": \"<string>\",\n  \"referenceNumber\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3fd9d7af-d6fe-4b57-acb0-86e163be8f8a",
+              "name": "Shipment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "shipments",
+                    ":shipmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shipmentId",
+                      "description": "(Required) The unique identifier of the shipment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shipper\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"consignee\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"destinationCountry\": \"<string>\",\n  \"lineItems\": [\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 9553.995751674873,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 1499.1439266055306,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    },\n    {\n      \"description\": \"string\",\n      \"scheduleBNumber\": \"string\",\n      \"quantity\": 1715.5694507620412,\n      \"unitOfMeasure\": \"string\",\n      \"valueUSD\": 3597.42361565357,\n      \"countryOfOrigin\": \"string\",\n      \"eccnNumber\": \"string\"\n    }\n  ],\n  \"freightForwarder\": {\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"exportDate\": \"<date>\",\n  \"carrier\": \"<string>\",\n  \"trackingNumber\": \"<string>\",\n  \"referenceNumber\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.trabex.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e4fc7d09-7d3a-4044-8a4c-72f04b87ec3d",
+    "name": "Trabex Trade Compliance AES Filing Shipments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Trabex Trade Compliance API provides programmatic access to export compliance automation including shipment data submission, export documentation generation, Automated Export System (AES) filing, and restricted party screening (RPS). The API enables organizations to integrate compliance workflows directly into logistics and ERP systems, supporting single shipments, batch processing, and continuous screening operations. Trabex automates document creation, AES filing, and restricted party screening to reduce export compliance risk and errors.\n\nContact Support:\n Name: Trabex Support",
+      "type": "text/plain"
+    }
+  }
+}

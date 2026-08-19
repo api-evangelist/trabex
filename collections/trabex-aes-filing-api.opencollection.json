@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Trabex Trade Compliance AES Filing API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-Key",
+      "value": "{{X-API-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AES Filing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get AES Filings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.trabex.io/v1/aes/filings",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter filings by AES submission status."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of Electronic Export Information (EEI) filings submitted to the Automated Export System (AES). Returns filing status and internal transaction numbers (ITN)."
+        },
+        {
+          "info": {
+            "name": "Submit AES Filing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.trabex.io/v1/aes/filings/:shipmentId",
+            "params": [
+              {
+                "name": "shipmentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the shipment."
+              }
+            ]
+          },
+          "docs": "Submits Electronic Export Information (EEI) to the Automated Export System (AES) for the specified shipment. Returns the AES confirmation and Internal Transaction Number (ITN) on success."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
