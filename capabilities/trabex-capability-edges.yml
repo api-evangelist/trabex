@@ -1,0 +1,33 @@
+slug: trabex
+provider: Trabex
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Transportation & Logistics
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Screening
+  spec_file: trabex-screening-api-openapi.yml
+  capability_id: BC-2480.40
+  capability_id_l1: BC-2480
+  capability_name: Sanctions and Denied-Party Screening Management
+  confidence: 0.95
+  evidence: POST /v1/screening/check screenParty; "restricted party screening (RPS)"; schema Party, ScreeningResponse
+  reason: The operations screen named parties against restricted/denied-party lists, exactly the sanctions
+    and denied-party screening capability.
+- tag: AES Filing
+  spec_file: trabex-aes-filing-api-openapi.yml
+  capability_id: BC-2480.20
+  capability_id_l1: BC-2480
+  capability_name: Customs Declaration Management
+  confidence: 0.9
+  evidence: POST /v1/aes/filings/{shipmentId} Submit AES Filing; "Automated Export System (AES) filing"
+  reason: AES filing is the electronic submission of export declarations to US customs authorities, which
+    is squarely customs declaration management for cross-border movements.

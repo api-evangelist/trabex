@@ -173,6 +173,9 @@ apis:
   - type: Support
     url: https://support.trabex.io/support/home
 common:
+  - type: CapabilityMap
+    url: capabilities/trabex-capability-edges.yml
+    name: Trabex Business Capability Map
   - type: AgenticAccess
     url: agentic-access/trabex-agentic-access.yml
   - type: DomainSecurity
