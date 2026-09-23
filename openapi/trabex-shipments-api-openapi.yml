@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Trabex Trade Compliance AES Filing Shipments API
-  description: The Trabex Trade Compliance API provides programmatic access to export compliance automation including shipment data submission, export documentation generation, Automated Export System (AES) filing, and restricted party screening (RPS). The API enables organizations to integrate compliance workflows directly into logistics and ERP systems, supporting single shipments, batch processing, and continuous screening operations. Trabex automates document creation, AES filing, and restricted party screening to reduce export compliance risk and errors.
+  title: Trabex Trade Compliance Shipments API
+  description: The Trabex Trade Compliance API provides programmatic access to export compliance automation including shipment data submission, export documentation generation, Automated Export System (AES) filing, and restricted party screening (RPS).
   version: '1.0'
   contact:
     name: Trabex Support
@@ -178,6 +178,47 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    ShipmentsListResponse:
+      type: object
+      description: Paginated list of export shipments.
+      properties:
+        total:
+          type: integer
+          description: Total number of matching shipments.
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        shipments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Shipment'
+    ExportLineItem:
+      type: object
+      description: A line item in an export shipment.
+      properties:
+        description:
+          type: string
+          description: Description of the commodity.
+        scheduleBNumber:
+          type: string
+          description: Schedule B or HTS classification number.
+        quantity:
+          type: number
+          description: Export quantity.
+        unitOfMeasure:
+          type: string
+          description: Unit of measure code.
+        valueUSD:
+          type: number
+          format: double
+          description: Value in US dollars.
+        countryOfOrigin:
+          type: string
+          description: ISO 3166-1 alpha-2 country of origin code.
+        eccnNumber:
+          type: string
+          description: Export Control Classification Number if applicable.
     Shipment:
       type: object
       description: An export shipment with compliance status and results.
@@ -231,21 +272,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ExportLineItem'
-    ShipmentsListResponse:
-      type: object
-      description: Paginated list of export shipments.
-      properties:
-        total:
-          type: integer
-          description: Total number of matching shipments.
-        page:
-          type: integer
-        pageSize:
-          type: integer
-        shipments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Shipment'
     Party:
       type: object
       description: A trading party for restricted party screening.
@@ -319,32 +345,6 @@ components:
           description: Additional error detail messages.
           items:
             type: string
-    ExportLineItem:
-      type: object
-      description: A line item in an export shipment.
-      properties:
-        description:
-          type: string
-          description: Description of the commodity.
-        scheduleBNumber:
-          type: string
-          description: Schedule B or HTS classification number.
-        quantity:
-          type: number
-          description: Export quantity.
-        unitOfMeasure:
-          type: string
-          description: Unit of measure code.
-        valueUSD:
-          type: number
-          format: double
-          description: Value in US dollars.
-        countryOfOrigin:
-          type: string
-          description: ISO 3166-1 alpha-2 country of origin code.
-        eccnNumber:
-          type: string
-          description: Export Control Classification Number if applicable.
   parameters:
     ShipmentId:
       name: shipmentId

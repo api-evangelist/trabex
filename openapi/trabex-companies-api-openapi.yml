@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Trabex Trade Compliance AES Filing Companies API
-  description: The Trabex Trade Compliance API provides programmatic access to export compliance automation including shipment data submission, export documentation generation, Automated Export System (AES) filing, and restricted party screening (RPS). The API enables organizations to integrate compliance workflows directly into logistics and ERP systems, supporting single shipments, batch processing, and continuous screening operations. Trabex automates document creation, AES filing, and restricted party screening to reduce export compliance risk and errors.
+  title: Trabex Trade Compliance Companies API
+  description: The Trabex Trade Compliance API provides programmatic access to export compliance automation including shipment data submission, export documentation generation, Automated Export System (AES) filing, and restricted party screening (RPS).
   version: '1.0'
   contact:
     name: Trabex Support
@@ -69,29 +69,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Error:
-      type: object
-      description: Standard error response from the Trabex API.
-      properties:
-        code:
-          type: string
-          description: Error code identifier.
-        message:
-          type: string
-          description: Human-readable error description.
-        details:
-          type: array
-          description: Additional error detail messages.
-          items:
-            type: string
-    CompaniesResponse:
-      type: object
-      description: List of companies in the Trabex platform.
-      properties:
-        companies:
-          type: array
-          items:
-            $ref: '#/components/schemas/Company'
     Company:
       type: object
       description: A company or trading party record in the Trabex platform.
@@ -124,6 +101,29 @@ components:
           - Consignee
           - FreightForwarder
           - BrokerAgent
+    Error:
+      type: object
+      description: Standard error response from the Trabex API.
+      properties:
+        code:
+          type: string
+          description: Error code identifier.
+        message:
+          type: string
+          description: Human-readable error description.
+        details:
+          type: array
+          description: Additional error detail messages.
+          items:
+            type: string
+    CompaniesResponse:
+      type: object
+      description: List of companies in the Trabex platform.
+      properties:
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Company'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

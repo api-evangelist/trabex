@@ -1,11 +1,7 @@
 {
   "provider": "trabex",
   "sources": [
-    "trabex-aes-filing-api-openapi.yml",
-    "trabex-companies-api-openapi.yml",
-    "trabex-documents-api-openapi.yml",
-    "trabex-screening-api-openapi.yml",
-    "trabex-shipments-api-openapi.yml"
+    "_original/trabex-trade-compliance-openapi.yml"
   ],
   "outputs": [
     "trabex-aes-filing-api-openapi.yml",
@@ -17,6 +13,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "trabex-trade-compliance-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "trabex-aes-filing-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "trabex-companies-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "trabex-documents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "trabex-screening-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "trabex-shipments-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

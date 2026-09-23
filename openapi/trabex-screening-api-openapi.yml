@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Trabex Trade Compliance AES Filing Screening API
-  description: The Trabex Trade Compliance API provides programmatic access to export compliance automation including shipment data submission, export documentation generation, Automated Export System (AES) filing, and restricted party screening (RPS). The API enables organizations to integrate compliance workflows directly into logistics and ERP systems, supporting single shipments, batch processing, and continuous screening operations. Trabex automates document creation, AES filing, and restricted party screening to reduce export compliance risk and errors.
+  title: Trabex Trade Compliance Screening API
+  description: The Trabex Trade Compliance API provides programmatic access to export compliance automation including shipment data submission, export documentation generation, Automated Export System (AES) filing, and restricted party screening (RPS).
   version: '1.0'
   contact:
     name: Trabex Support
@@ -95,38 +95,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    ScreeningResponse:
-      type: object
-      description: Results of a restricted party screening check.
-      properties:
-        party:
-          $ref: '#/components/schemas/Party'
-        riskLevel:
-          type: string
-          description: Overall compliance risk level.
-          enum:
-          - Clear
-          - Review
-          - Blocked
-        matches:
-          type: array
-          description: List of potential matches found in screening lists.
-          items:
-            type: object
-            properties:
-              listName:
-                type: string
-                description: Name of the list where match was found.
-              matchedName:
-                type: string
-                description: Name of the matched entity on the list.
-              matchScore:
-                type: number
-                format: double
-                description: Confidence score of the match (0-100).
-              reason:
-                type: string
-                description: Reason for inclusion on the list.
     Error:
       type: object
       description: Standard error response from the Trabex API.
@@ -183,6 +151,38 @@ components:
         postalCode:
           type: string
           description: Postal or zip code.
+    ScreeningResponse:
+      type: object
+      description: Results of a restricted party screening check.
+      properties:
+        party:
+          $ref: '#/components/schemas/Party'
+        riskLevel:
+          type: string
+          description: Overall compliance risk level.
+          enum:
+          - Clear
+          - Review
+          - Blocked
+        matches:
+          type: array
+          description: List of potential matches found in screening lists.
+          items:
+            type: object
+            properties:
+              listName:
+                type: string
+                description: Name of the list where match was found.
+              matchedName:
+                type: string
+                description: Name of the matched entity on the list.
+              matchScore:
+                type: number
+                format: double
+                description: Confidence score of the match (0-100).
+              reason:
+                type: string
+                description: Reason for inclusion on the list.
   securitySchemes:
     apiKeyAuth:
       type: apiKey
