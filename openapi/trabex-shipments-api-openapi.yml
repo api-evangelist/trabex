@@ -178,47 +178,57 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    ShipmentsListResponse:
+    ShipmentRequest:
       type: object
-      description: Paginated list of export shipments.
+      description: Request body for creating or updating an export shipment.
+      required:
+      - shipper
+      - consignee
+      - destinationCountry
+      - lineItems
       properties:
-        total:
-          type: integer
-          description: Total number of matching shipments.
-        page:
-          type: integer
-        pageSize:
-          type: integer
-        shipments:
+        shipper:
+          $ref: '#/components/schemas/Party'
+        consignee:
+          $ref: '#/components/schemas/Party'
+        freightForwarder:
+          $ref: '#/components/schemas/Party'
+        destinationCountry:
+          type: string
+          description: ISO 3166-1 alpha-2 destination country code.
+        exportDate:
+          type: string
+          format: date
+          description: Planned or actual export date.
+        carrier:
+          type: string
+          description: Carrier name or SCAC code.
+        trackingNumber:
+          type: string
+          description: Shipment tracking or bill of lading number.
+        lineItems:
           type: array
+          description: List of commodity line items in the shipment.
           items:
-            $ref: '#/components/schemas/Shipment'
-    ExportLineItem:
+            $ref: '#/components/schemas/ExportLineItem'
+        referenceNumber:
+          type: string
+          description: Internal reference or order number.
+    Error:
       type: object
-      description: A line item in an export shipment.
+      description: Standard error response from the Trabex API.
       properties:
-        description:
+        code:
           type: string
-          description: Description of the commodity.
-        scheduleBNumber:
+          description: Error code identifier.
+        message:
           type: string
-          description: Schedule B or HTS classification number.
-        quantity:
-          type: number
-          description: Export quantity.
-        unitOfMeasure:
-          type: string
-          description: Unit of measure code.
-        valueUSD:
-          type: number
-          format: double
-          description: Value in US dollars.
-        countryOfOrigin:
-          type: string
-          description: ISO 3166-1 alpha-2 country of origin code.
-        eccnNumber:
-          type: string
-          description: Export Control Classification Number if applicable.
+          description: Human-readable error description.
+        details:
+          type: array
+          description: Additional error detail messages.
+          items:
+            type: string
     Shipment:
       type: object
       description: An export shipment with compliance status and results.
@@ -294,57 +304,47 @@ components:
         postalCode:
           type: string
           description: Postal or zip code.
-    ShipmentRequest:
+    ShipmentsListResponse:
       type: object
-      description: Request body for creating or updating an export shipment.
-      required:
-      - shipper
-      - consignee
-      - destinationCountry
-      - lineItems
+      description: Paginated list of export shipments.
       properties:
-        shipper:
-          $ref: '#/components/schemas/Party'
-        consignee:
-          $ref: '#/components/schemas/Party'
-        freightForwarder:
-          $ref: '#/components/schemas/Party'
-        destinationCountry:
-          type: string
-          description: ISO 3166-1 alpha-2 destination country code.
-        exportDate:
-          type: string
-          format: date
-          description: Planned or actual export date.
-        carrier:
-          type: string
-          description: Carrier name or SCAC code.
-        trackingNumber:
-          type: string
-          description: Shipment tracking or bill of lading number.
-        lineItems:
+        total:
+          type: integer
+          description: Total number of matching shipments.
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        shipments:
           type: array
-          description: List of commodity line items in the shipment.
           items:
-            $ref: '#/components/schemas/ExportLineItem'
-        referenceNumber:
-          type: string
-          description: Internal reference or order number.
-    Error:
+            $ref: '#/components/schemas/Shipment'
+    ExportLineItem:
       type: object
-      description: Standard error response from the Trabex API.
+      description: A line item in an export shipment.
       properties:
-        code:
+        description:
           type: string
-          description: Error code identifier.
-        message:
+          description: Description of the commodity.
+        scheduleBNumber:
           type: string
-          description: Human-readable error description.
-        details:
-          type: array
-          description: Additional error detail messages.
-          items:
-            type: string
+          description: Schedule B or HTS classification number.
+        quantity:
+          type: number
+          description: Export quantity.
+        unitOfMeasure:
+          type: string
+          description: Unit of measure code.
+        valueUSD:
+          type: number
+          format: double
+          description: Value in US dollars.
+        countryOfOrigin:
+          type: string
+          description: ISO 3166-1 alpha-2 country of origin code.
+        eccnNumber:
+          type: string
+          description: Export Control Classification Number if applicable.
   parameters:
     ShipmentId:
       name: shipmentId
