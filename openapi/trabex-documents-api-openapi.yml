@@ -45,22 +45,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
+  parameters:
+    ShipmentId:
+      name: shipmentId
+      in: path
+      required: true
+      description: The unique identifier of the shipment.
+      schema:
+        type: string
   schemas:
-    Error:
-      type: object
-      description: Standard error response from the Trabex API.
-      properties:
-        code:
-          type: string
-          description: Error code identifier.
-        message:
-          type: string
-          description: Human-readable error description.
-        details:
-          type: array
-          description: Additional error detail messages.
-          items:
-            type: string
     DocumentsResponse:
       type: object
       description: List of export compliance documents for a shipment.
@@ -88,14 +81,21 @@ components:
               generatedAt:
                 type: string
                 format: date-time
-  parameters:
-    ShipmentId:
-      name: shipmentId
-      in: path
-      required: true
-      description: The unique identifier of the shipment.
-      schema:
-        type: string
+    Error:
+      type: object
+      description: Standard error response from the Trabex API.
+      properties:
+        code:
+          type: string
+          description: Error code identifier.
+        message:
+          type: string
+          description: Human-readable error description.
+        details:
+          type: array
+          description: Additional error detail messages.
+          items:
+            type: string
   securitySchemes:
     apiKeyAuth:
       type: apiKey

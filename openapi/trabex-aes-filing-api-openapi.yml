@@ -90,6 +90,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
+  parameters:
+    ShipmentId:
+      name: shipmentId
+      in: path
+      required: true
+      description: The unique identifier of the shipment.
+      schema:
+        type: string
   schemas:
     AESFilingResponse:
       type: object
@@ -112,16 +120,6 @@ components:
         filedAt:
           type: string
           format: date-time
-    AESFilingsResponse:
-      type: object
-      description: Paginated list of AES filings.
-      properties:
-        total:
-          type: integer
-        filings:
-          type: array
-          items:
-            $ref: '#/components/schemas/AESFilingResponse'
     Error:
       type: object
       description: Standard error response from the Trabex API.
@@ -137,14 +135,16 @@ components:
           description: Additional error detail messages.
           items:
             type: string
-  parameters:
-    ShipmentId:
-      name: shipmentId
-      in: path
-      required: true
-      description: The unique identifier of the shipment.
-      schema:
-        type: string
+    AESFilingsResponse:
+      type: object
+      description: Paginated list of AES filings.
+      properties:
+        total:
+          type: integer
+        filings:
+          type: array
+          items:
+            $ref: '#/components/schemas/AESFilingResponse'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

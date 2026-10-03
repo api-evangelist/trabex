@@ -178,6 +178,32 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    ExportLineItem:
+      type: object
+      description: A line item in an export shipment.
+      properties:
+        description:
+          type: string
+          description: Description of the commodity.
+        scheduleBNumber:
+          type: string
+          description: Schedule B or HTS classification number.
+        quantity:
+          type: number
+          description: Export quantity.
+        unitOfMeasure:
+          type: string
+          description: Unit of measure code.
+        valueUSD:
+          type: number
+          format: double
+          description: Value in US dollars.
+        countryOfOrigin:
+          type: string
+          description: ISO 3166-1 alpha-2 country of origin code.
+        eccnNumber:
+          type: string
+          description: Export Control Classification Number if applicable.
     ShipmentRequest:
       type: object
       description: Request body for creating or updating an export shipment.
@@ -214,21 +240,6 @@ components:
         referenceNumber:
           type: string
           description: Internal reference or order number.
-    Error:
-      type: object
-      description: Standard error response from the Trabex API.
-      properties:
-        code:
-          type: string
-          description: Error code identifier.
-        message:
-          type: string
-          description: Human-readable error description.
-        details:
-          type: array
-          description: Additional error detail messages.
-          items:
-            type: string
     Shipment:
       type: object
       description: An export shipment with compliance status and results.
@@ -282,6 +293,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ExportLineItem'
+    ShipmentsListResponse:
+      type: object
+      description: Paginated list of export shipments.
+      properties:
+        total:
+          type: integer
+          description: Total number of matching shipments.
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        shipments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Shipment'
     Party:
       type: object
       description: A trading party for restricted party screening.
@@ -304,47 +330,21 @@ components:
         postalCode:
           type: string
           description: Postal or zip code.
-    ShipmentsListResponse:
+    Error:
       type: object
-      description: Paginated list of export shipments.
+      description: Standard error response from the Trabex API.
       properties:
-        total:
-          type: integer
-          description: Total number of matching shipments.
-        page:
-          type: integer
-        pageSize:
-          type: integer
-        shipments:
+        code:
+          type: string
+          description: Error code identifier.
+        message:
+          type: string
+          description: Human-readable error description.
+        details:
           type: array
+          description: Additional error detail messages.
           items:
-            $ref: '#/components/schemas/Shipment'
-    ExportLineItem:
-      type: object
-      description: A line item in an export shipment.
-      properties:
-        description:
-          type: string
-          description: Description of the commodity.
-        scheduleBNumber:
-          type: string
-          description: Schedule B or HTS classification number.
-        quantity:
-          type: number
-          description: Export quantity.
-        unitOfMeasure:
-          type: string
-          description: Unit of measure code.
-        valueUSD:
-          type: number
-          format: double
-          description: Value in US dollars.
-        countryOfOrigin:
-          type: string
-          description: ISO 3166-1 alpha-2 country of origin code.
-        eccnNumber:
-          type: string
-          description: Export Control Classification Number if applicable.
+            type: string
   parameters:
     ShipmentId:
       name: shipmentId

@@ -95,25 +95,21 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    ScreeningRequest:
+    Error:
       type: object
-      description: Request body for a restricted party screening check.
-      required:
-      - party
+      description: Standard error response from the Trabex API.
       properties:
-        party:
-          $ref: '#/components/schemas/Party'
-        listTypes:
+        code:
+          type: string
+          description: Error code identifier.
+        message:
+          type: string
+          description: Human-readable error description.
+        details:
           type: array
-          description: Specific screening lists to check. If omitted, all applicable lists are checked.
+          description: Additional error detail messages.
           items:
             type: string
-            enum:
-            - SDN
-            - DPL
-            - EL
-            - BIS
-            - OFAC
     Party:
       type: object
       description: A trading party for restricted party screening.
@@ -136,21 +132,25 @@ components:
         postalCode:
           type: string
           description: Postal or zip code.
-    Error:
+    ScreeningRequest:
       type: object
-      description: Standard error response from the Trabex API.
+      description: Request body for a restricted party screening check.
+      required:
+      - party
       properties:
-        code:
-          type: string
-          description: Error code identifier.
-        message:
-          type: string
-          description: Human-readable error description.
-        details:
+        party:
+          $ref: '#/components/schemas/Party'
+        listTypes:
           type: array
-          description: Additional error detail messages.
+          description: Specific screening lists to check. If omitted, all applicable lists are checked.
           items:
             type: string
+            enum:
+            - SDN
+            - DPL
+            - EL
+            - BIS
+            - OFAC
     ScreeningResponse:
       type: object
       description: Results of a restricted party screening check.

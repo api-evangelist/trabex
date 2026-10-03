@@ -69,6 +69,14 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    CompaniesResponse:
+      type: object
+      description: List of companies in the Trabex platform.
+      properties:
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Company'
     Error:
       type: object
       description: Standard error response from the Trabex API.
@@ -116,14 +124,6 @@ components:
           - Consignee
           - FreightForwarder
           - BrokerAgent
-    CompaniesResponse:
-      type: object
-      description: List of companies in the Trabex platform.
-      properties:
-        companies:
-          type: array
-          items:
-            $ref: '#/components/schemas/Company'
   securitySchemes:
     apiKeyAuth:
       type: apiKey
