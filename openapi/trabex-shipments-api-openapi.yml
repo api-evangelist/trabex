@@ -178,6 +178,43 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      description: Standard error response from the Trabex API.
+      properties:
+        code:
+          type: string
+          description: Error code identifier.
+        message:
+          type: string
+          description: Human-readable error description.
+        details:
+          type: array
+          description: Additional error detail messages.
+          items:
+            type: string
+    Party:
+      type: object
+      description: A trading party for restricted party screening.
+      properties:
+        name:
+          type: string
+          description: Full legal name of the party.
+        address:
+          type: string
+          description: Street address.
+        city:
+          type: string
+          description: City.
+        state:
+          type: string
+          description: State or province.
+        country:
+          type: string
+          description: ISO 3166-1 alpha-2 country code.
+        postalCode:
+          type: string
+          description: Postal or zip code.
     ExportLineItem:
       type: object
       description: A line item in an export shipment.
@@ -204,42 +241,6 @@ components:
         eccnNumber:
           type: string
           description: Export Control Classification Number if applicable.
-    ShipmentRequest:
-      type: object
-      description: Request body for creating or updating an export shipment.
-      required:
-      - shipper
-      - consignee
-      - destinationCountry
-      - lineItems
-      properties:
-        shipper:
-          $ref: '#/components/schemas/Party'
-        consignee:
-          $ref: '#/components/schemas/Party'
-        freightForwarder:
-          $ref: '#/components/schemas/Party'
-        destinationCountry:
-          type: string
-          description: ISO 3166-1 alpha-2 destination country code.
-        exportDate:
-          type: string
-          format: date
-          description: Planned or actual export date.
-        carrier:
-          type: string
-          description: Carrier name or SCAC code.
-        trackingNumber:
-          type: string
-          description: Shipment tracking or bill of lading number.
-        lineItems:
-          type: array
-          description: List of commodity line items in the shipment.
-          items:
-            $ref: '#/components/schemas/ExportLineItem'
-        referenceNumber:
-          type: string
-          description: Internal reference or order number.
     Shipment:
       type: object
       description: An export shipment with compliance status and results.
@@ -293,6 +294,42 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ExportLineItem'
+    ShipmentRequest:
+      type: object
+      description: Request body for creating or updating an export shipment.
+      required:
+      - shipper
+      - consignee
+      - destinationCountry
+      - lineItems
+      properties:
+        shipper:
+          $ref: '#/components/schemas/Party'
+        consignee:
+          $ref: '#/components/schemas/Party'
+        freightForwarder:
+          $ref: '#/components/schemas/Party'
+        destinationCountry:
+          type: string
+          description: ISO 3166-1 alpha-2 destination country code.
+        exportDate:
+          type: string
+          format: date
+          description: Planned or actual export date.
+        carrier:
+          type: string
+          description: Carrier name or SCAC code.
+        trackingNumber:
+          type: string
+          description: Shipment tracking or bill of lading number.
+        lineItems:
+          type: array
+          description: List of commodity line items in the shipment.
+          items:
+            $ref: '#/components/schemas/ExportLineItem'
+        referenceNumber:
+          type: string
+          description: Internal reference or order number.
     ShipmentsListResponse:
       type: object
       description: Paginated list of export shipments.
@@ -308,43 +345,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Shipment'
-    Party:
-      type: object
-      description: A trading party for restricted party screening.
-      properties:
-        name:
-          type: string
-          description: Full legal name of the party.
-        address:
-          type: string
-          description: Street address.
-        city:
-          type: string
-          description: City.
-        state:
-          type: string
-          description: State or province.
-        country:
-          type: string
-          description: ISO 3166-1 alpha-2 country code.
-        postalCode:
-          type: string
-          description: Postal or zip code.
-    Error:
-      type: object
-      description: Standard error response from the Trabex API.
-      properties:
-        code:
-          type: string
-          description: Error code identifier.
-        message:
-          type: string
-          description: Human-readable error description.
-        details:
-          type: array
-          description: Additional error detail messages.
-          items:
-            type: string
   parameters:
     ShipmentId:
       name: shipmentId
