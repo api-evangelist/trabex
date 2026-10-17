@@ -91,31 +91,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    AESFilingsResponse:
-      type: object
-      description: Paginated list of AES filings.
-      properties:
-        total:
-          type: integer
-        filings:
-          type: array
-          items:
-            $ref: '#/components/schemas/AESFilingResponse'
-    Error:
-      type: object
-      description: Standard error response from the Trabex API.
-      properties:
-        code:
-          type: string
-          description: Error code identifier.
-        message:
-          type: string
-          description: Human-readable error description.
-        details:
-          type: array
-          description: Additional error detail messages.
-          items:
-            type: string
     AESFilingResponse:
       type: object
       description: Result of an AES filing submission.
@@ -137,6 +112,31 @@ components:
         filedAt:
           type: string
           format: date-time
+    Error:
+      type: object
+      description: Standard error response from the Trabex API.
+      properties:
+        code:
+          type: string
+          description: Error code identifier.
+        message:
+          type: string
+          description: Human-readable error description.
+        details:
+          type: array
+          description: Additional error detail messages.
+          items:
+            type: string
+    AESFilingsResponse:
+      type: object
+      description: Paginated list of AES filings.
+      properties:
+        total:
+          type: integer
+        filings:
+          type: array
+          items:
+            $ref: '#/components/schemas/AESFilingResponse'
   parameters:
     ShipmentId:
       name: shipmentId

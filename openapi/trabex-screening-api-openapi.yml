@@ -95,25 +95,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    ScreeningRequest:
-      type: object
-      description: Request body for a restricted party screening check.
-      required:
-      - party
-      properties:
-        party:
-          $ref: '#/components/schemas/Party'
-        listTypes:
-          type: array
-          description: Specific screening lists to check. If omitted, all applicable lists are checked.
-          items:
-            type: string
-            enum:
-            - SDN
-            - DPL
-            - EL
-            - BIS
-            - OFAC
     Party:
       type: object
       description: A trading party for restricted party screening.
@@ -136,6 +117,25 @@ components:
         postalCode:
           type: string
           description: Postal or zip code.
+    ScreeningRequest:
+      type: object
+      description: Request body for a restricted party screening check.
+      required:
+      - party
+      properties:
+        party:
+          $ref: '#/components/schemas/Party'
+        listTypes:
+          type: array
+          description: Specific screening lists to check. If omitted, all applicable lists are checked.
+          items:
+            type: string
+            enum:
+            - SDN
+            - DPL
+            - EL
+            - BIS
+            - OFAC
     Error:
       type: object
       description: Standard error response from the Trabex API.
