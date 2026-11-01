@@ -1,4 +1,4 @@
-# Trabex (trabex)
+# Trabex
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,66 +66,161 @@
 
 Trabex is a trade compliance platform that provides automated export compliance, shipment management, restricted party screening, and Automated Export System (AES) filing services. Trabex offers APIs for integrating trade compliance workflows including shipment data ingestion, export documentation generation, financial reporting, and ancillary compliance data to help organizations manage global trade risk.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/trabex/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/trabex/refs/heads/main/apis.yml)
+**Areas:** Compliance · Export Control · Logistics · Restricted Party Screening · Shipment Management · Trade Compliance
 
-## Scope
+## Trabex on APIs.io
 
-- **Type:** Index
+Everything profiled for Trabex is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/trabex/](https://apis.io/providers/trabex/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (5)
 
-- Compliance
-- Export Control
-- Logistics
-- Restricted Party Screening
-- Shipment Management
-- Trade Compliance
+- [Trabex AES Filing API](https://apis.io/apis/trabex/trabex-aes-filing-api/) — Submit and manage Electronic Export Information (EEI) filings to the Automated Export System (AES) for export reporting compliance.
+- [Trabex Companies API](https://apis.io/apis/trabex/trabex-companies-api/) — Manage company and party information used in trade compliance workflows including shippers, consignees, and freight forwarders.
+- [Trabex Documents API](https://apis.io/apis/trabex/trabex-documents-api/) — Generate and retrieve export compliance documents including commercial invoices, packing lists, certificates of origin, and shipper's letter of instruction.
+- [Trabex Screening API](https://apis.io/apis/trabex/trabex-screening-api/) — Perform restricted party screening (RPS) against denied party lists, sanctioned entities, and embargoed countries to identify compliance risks.
+- [Trabex Shipments API](https://apis.io/apis/trabex/trabex-shipments-api/) — Submit and manage export shipment data for compliance processing, AES filing, and documentation generation.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-16
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### Trabex Trade Compliance API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-The Trabex Trade Compliance API provides programmatic access to export compliance automation including shipment data submission, export documentation generation, Automated Export System (AES) filing, and restricted party screening. The API enables organizations to integrate compliance workflows into logistics and ERP systems, supporting single shipments, batch screening, and continuous compliance operations.
+- [Trabex Agentic Access](https://apis.io/agentic-access/trabex/trabex-agentic-access/)
 
-- **Human URL:** [https://apidocs.trabex.io/](https://apidocs.trabex.io/)
-- **Base URL:** `https://api.trabex.io`
+#### JSON Schema (1)
 
-#### Tags
+The data models the API reads and writes.
 
-- AES Filing
-- Compliance
-- Export Control
-- Logistics
-- Restricted Party Screening
-- Shipment Management
-- Trade
+- [Trabex Export Shipment](https://apis.io/schemas/trabex/trabex-shipment/)
 
-#### Properties
+#### JSON Structure (1)
 
-- [Documentation](https://apidocs.trabex.io/)
-- [OpenAPI](openapi/trabex-trade-compliance-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/trabex-trade-compliance.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/trabex-trade-compliance.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/trabex-shipment-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/trabex-shipment-structure.json)
-- [JSON-LD](json-ld/trabex-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [Spectral Rules](rules/trabex-rules.yml)
-- [Vocabulary](vocabulary/trabex-vocabulary.yml)
-- [Support](https://support.trabex.io/support/home)
+Data models expressed in JSON Structure.
 
-## Common Properties
+- [Trabex Shipment Structure](https://apis.io/json-structure/trabex/trabex-shipment-structure/)
 
-- [LinkedIn](https://www.linkedin.com/company/trabex-export-compliance)
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Trabex Context](https://apis.io/jsonld/trabex/trabex-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Trabex Trade Compliance Vocabulary](https://apis.io/vocabularies/trabex/trabex-vocabulary/)
+
+#### Examples (2)
+
+Example requests and responses.
+
+- [Trabex Create Shipment Example](https://apis.io/examples/trabex/trabex-create-shipment-example/)
+- [Trabex Screen Party Example](https://apis.io/examples/trabex/trabex-screen-party-example/)
+
+#### Collections (6)
+
+Postman and Open Collection request collections.
+
+- [Trabex Trade Compliance AES Filing API](https://apis.io/collections/trabex/open-trabex-aes-filing-api/)
+- [Trabex Trade Compliance AES Filing Companies API](https://apis.io/collections/trabex/open-trabex-companies-api/)
+- [Trabex Trade Compliance AES Filing Documents API](https://apis.io/collections/trabex/open-trabex-documents-api/)
+- [Trabex Trade Compliance AES Filing Screening API](https://apis.io/collections/trabex/open-trabex-screening-api/)
+- [Trabex Trade Compliance AES Filing Shipments API](https://apis.io/collections/trabex/open-trabex-shipments-api/)
+- [Trabex Trade Compliance API](https://apis.io/collections/trabex/open-trabex-trade-compliance/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Trabex — jsonschema rules](https://apis.io/rules/trabex/trabex-jsonschema-spectral-rules/)
+- [Trabex API Rules](https://apis.io/rules/trabex/trabex-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Trabex Authentication](https://apis.io/security/trabex/trabex-authentication/)
+- [Trabex Domain Security](https://apis.io/security/trabex/trabex-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Trabex Plans Pricing](https://apis.io/plans/trabex/trabex-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Trabex Rate Limits](https://apis.io/rate-limits/trabex/trabex-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Trabex Finops](https://apis.io/finops/trabex/trabex-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://trabex.io)
 - [Documentation](https://apidocs.trabex.io/)
 - [Support](https://support.trabex.io/support/home)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 32.5** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 60.9 |
+| Contract governance | 27.3 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 26.2 |
+| Access clarity | 7.9 |
+
+**Agent readiness 23.7** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/trabex/](https://apis.io/providers/trabex/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Trabex: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/trabex/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
